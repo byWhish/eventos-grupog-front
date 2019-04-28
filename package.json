@@ -2,6 +2,10 @@
   "name": "eventos-grupog-front",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "11.14.0",
+    "npm": "6.9.0"
+  },
   "dependencies": {
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
