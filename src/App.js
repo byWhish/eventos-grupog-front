@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {observer} from "mobx-react";
+// import Auth from "./services/Auth";
 
 @observer
 class App extends Component {
   render() {
+    // const auth = new Auth();
+    // auth.login();
     return (
       <div className="App">
         <header className="App-header">
