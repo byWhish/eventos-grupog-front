@@ -20,8 +20,8 @@
     "serve": "^11.0.0"
   },
   "scripts": {
-    "start": "REACT_APP_ENV=prod serve -s build",
-    "dev": "REACT_APP_ENV=dev react-app-rewired start",
+    "start": "NODE_ENV=prod serve -s build",
+    "dev": "NODE_ENV=dev react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
