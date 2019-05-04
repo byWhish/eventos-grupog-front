@@ -1,12 +1,13 @@
 import auth0 from 'auth0-js';
 import history from '../utils/History';
 import Logger from '../utils/Logger';
+import { config } from '../config';
 
 export default class Auth {
     auth0 = new auth0.WebAuth({
         domain: 'bywhish.auth0.com',
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
-        redirectUri: 'http://localhost:3000/auth',
+        redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
         scope: 'openid'
     });

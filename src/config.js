@@ -1,4 +1,5 @@
 export const config = {
+    authCallbackUri: process.env.REACT_APP_AUTH_CALLBACK_URI,
     defaultRequestTimeout: 5000
 };
 
