@@ -1,0 +1,12 @@
+{
+    "config": {
+        "urls": {
+            "root": "/",
+            "home": "/home",
+            "login": "/login",
+            "logout": "/logout",
+            "register": "/register",
+            "auth": "/auth"
+        }
+    }
+}
