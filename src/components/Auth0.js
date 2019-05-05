@@ -1,3 +1,6 @@
+import React from 'react';
+import Loading from './Loading';
+
 const Auth0 = (props) => {
     const { Auth } = props;
     const handleAuthentication = (nextState, replace) => {
@@ -6,7 +9,7 @@ const Auth0 = (props) => {
         }
     }
     handleAuthentication(props);
-    return null
+    return <Loading />
 };
 
 export default Auth0;
