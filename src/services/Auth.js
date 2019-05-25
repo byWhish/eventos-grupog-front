@@ -4,12 +4,13 @@ import Logger from '../utils/Logger';
 import { config } from '../config';
 
 export default class Auth {
+    userProfile;
     auth0 = new auth0.WebAuth({
         domain: 'bywhish.auth0.com',
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
         redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
-        scope: 'openid'
+        scope: 'openid profile'
     });
     accessToken;
     idToken;
@@ -17,6 +18,16 @@ export default class Auth {
 
     login() {
         this.auth0.authorize();
+    }
+
+    getProfile(callBack) {
+        this.auth0.client.userInfo(this.accessToken, (err, profile) => {
+            if (profile) {
+                this.userProfile = profile;
+                Logger.of('getProfile').trace('result:', profile);
+            }
+            callBack(err, profile);
+        });
     }
 
     handleAuthentication() {
