@@ -37,7 +37,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9000000', endColorstr='#00000000',GradientType=1 );
 }
 .carouselWrapper .slick-slider .slick-next{
-    right: 39px;
+    right: 0px;
     height: 100% !important;
     width: calc(186px/2);
     padding-right: 10px;
