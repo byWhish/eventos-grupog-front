@@ -2,9 +2,10 @@ import auth0 from 'auth0-js';
 import history from '../utils/History';
 import Logger from '../utils/Logger';
 import { config } from '../config';
+import { observable } from "mobx";
 
 export default class Auth {
-    userProfile;
+    @observable userProfile;
     auth0 = new auth0.WebAuth({
         domain: 'bywhish.auth0.com',
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
@@ -53,7 +54,7 @@ export default class Auth {
     }
 
     getIdToken() {
-        return this.idToken;
+        return `Bearer ${this.idToken}`;
     }
 
     setSession(authResult) {

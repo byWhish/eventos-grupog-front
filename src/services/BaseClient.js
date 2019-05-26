@@ -3,7 +3,7 @@ import { config } from '../config';
 
 class BaseClient {
 
-    static get = (endpoint, params = null, timeout = config.defaultRequestTimeout) => {
+    static get = (auth, endpoint, params = null, timeout = config.defaultRequestTimeout) => {
 
         const headers = {
             Authorization: null
@@ -18,7 +18,7 @@ class BaseClient {
             })
     };
 
-    static post = (url, data = null, timeout = config.defaultRequestTimeout) => {
+    static post = (auth, url, data = null, timeout = config.defaultRequestTimeout) => {
 
         const headers = {
             Authorization: null
@@ -35,7 +35,7 @@ class BaseClient {
 
 
     static getConfig = () => {
-        return BaseClient.get('/config/es-AR.json')
+        return BaseClient.get(null, '/config/es-AR.json')
             .then(response => {
                 return response;
             })
