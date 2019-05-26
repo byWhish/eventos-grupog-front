@@ -1,0 +1,115 @@
+.EventInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: white;
+}
+
+.EventInfoWrapper .profileWrapper {
+    align-self: flex-end;
+}
+
+.EventInfoWrapper .infoWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 90px;
+    width: 100%;
+}
+
+.EventInfoWrapper .eventDeadLine {
+    display: flex;
+    flex-direction: row;
+    height: 90px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.EventInfoWrapper .eventDeadLine .eventDeadLineDateTime {
+    /*align-self: flex-start;*/
+}
+
+
+.EventInfoWrapper .infoWrapper .eventType {
+    /*display: flex;*/
+    width: 300px;
+}
+
+.EventInfoWrapper .infoWrapper .eventName {
+    /*display: flex;*/
+    width: 300px;
+}
+
+.EventInfoWrapper .infoWrapper .eventDateTime {
+    /*display: flex;*/
+    width: 300px;
+}
+
+.MuiFormLabel-root {
+    color: white !important;
+}
+
+.MuiInputBase-input {
+    color: white !important;
+}
+
+.MuiInput-underline:after {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    transform: scaleX(0);
+    transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    border-bottom: 2px solid white !important;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: white !important;
+    pointer-events: none;
+}
+
+.MuiInput-underline:before {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "\00a0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition-property: border-bottom-color;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0ms;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.42) !important;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(255, 255, 255, 0.42) !important;
+    pointer-events: none;
+}
+
+.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.23) !important;
+    border-top-color: rgba(255, 255, 255, 0.23) !important;
+    border-right-color: rgba(255, 255, 255, 0.23) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.23) !important;
+    border-left-color: rgba(255, 255, 255, 0.23) !important;
+}
+
+.MuiFormHelperText-root {
+    color: rgba(255, 255, 255, 0.54) !important;
+    margin: 0;
+    font-size: 0.75rem;
+    text-align: left;
+    margin-top: 8px;
+    min-height: 1em;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1em;
+    letter-spacing: 0.03333em;
+}
+
+.MuiSelect-icon {
+    color: white !important;
+}

@@ -1,9 +1,12 @@
 import React from 'react';
+import './Loading.css';
+import loading from './loading.gif';
 
 const Loading = () => {
     return (
         <div className="loading">
-            Loading...
+            <img alt="Loading..." src={loading} />
+            <span>Loading...</span>
         </div>
     )
 }
