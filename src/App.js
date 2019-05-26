@@ -11,32 +11,47 @@ import {STATE_ERROR, STATE_PENDING} from "./config";
 import Loading from "./components/Loading";
 import Error from "./components/Error";
 import Auth0 from "./components/Auth0";
-import Home from "./components/Home";
+import Home from "./views/Home";
+import PrivateRoute from "./utils/PrivateRoute";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import EventsStore from "./stores/EventsStore";
+import AppContext from './utils/context';
+
+const context = {
+    rootStore: {}
+};
 
 @observer
 class App extends Component {
   constructor(props){
     super(props);
     this.Auth = new Auth();
-    this.configStore = new ConfigStore();
+    context.rootStore = {
+        Auth: this.Auth,
+        configStore: new ConfigStore(),
+        eventStore: new EventsStore(this.Auth)
+    };
   };
 
   componentDidMount() {
-    this.configStore.fetchConfig();
+    context.rootStore.configStore.fetchConfig();
   }
 
   render() {
-    const { urls, state } = this.configStore;
+    const { urls, state } = context.rootStore.configStore;
     if (state === STATE_PENDING) return <Loading />;
     if (state === STATE_ERROR) return <Error />;
     return (
-      <Switch>
-          <PropsRoute exact path={urls.root} component={Login} Auth={this.Auth} />
-          <PropsRoute exact path={urls.login} component={Login} Auth={this.Auth} />
-          <PropsRoute exact path={urls.auth} component={Auth0} Auth={this.Auth} />
-          <PropsRoute exact path={urls.home} component={Home} Auth={this.Auth} />
-          <Route component={Error404} />
-      </Switch>
+        <AppContext.Provider value={context}>
+            <Switch>
+                <PropsRoute exact path={urls.login} component={Login} />
+                <PropsRoute exact path={urls.auth} component={Auth0} />
+                <PrivateRoute exact path={urls.root} component={Login} />
+                <PrivateRoute exact path={urls.home} component={Home} />
+                <Route component={Error404} />
+            </Switch>
+        </AppContext.Provider>
     );
   }
 }

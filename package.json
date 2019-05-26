@@ -12,12 +12,15 @@
     "dotenv": "^8.0.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
+    "mobx-react-lite": "^1.3.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "serve": "^11.0.0"
+    "react-slick": "^0.24.0",
+    "serve": "^11.0.0",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "NODE_ENV=prod serve -s build",

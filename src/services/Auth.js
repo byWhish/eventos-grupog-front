@@ -2,14 +2,16 @@ import auth0 from 'auth0-js';
 import history from '../utils/History';
 import Logger from '../utils/Logger';
 import { config } from '../config';
+import { observable } from "mobx";
 
 export default class Auth {
+    @observable userProfile;
     auth0 = new auth0.WebAuth({
         domain: 'bywhish.auth0.com',
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
         redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
-        scope: 'openid'
+        scope: 'openid profile'
     });
     accessToken;
     idToken;
@@ -19,13 +21,28 @@ export default class Auth {
         this.auth0.authorize();
     }
 
+    isLoggedIn() {
+        return this.idToken;
+    }
+
+    getProfile(callBack) {
+        this.auth0.client.userInfo(this.accessToken, (err, profile) => {
+            if (profile) {
+                this.userProfile = profile;
+                Logger.of('getProfile').trace('result:', profile);
+            }
+            callBack(err, profile);
+        });
+    }
+
     handleAuthentication() {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
                 Logger.of('handleAuthentication').trace('result:', authResult);
-            } else if (err) {
+                console.log('hola 1', this.idToken)
                 history.replace('/home');
+            } else if (err) {
                 Logger.of('handleAuthentication').error('error:', err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
             }
@@ -37,7 +54,7 @@ export default class Auth {
     }
 
     getIdToken() {
-        return this.idToken;
+        return `Bearer ${this.idToken}`;
     }
 
     setSession(authResult) {

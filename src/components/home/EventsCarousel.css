@@ -1,0 +1,73 @@
+.carouselWrapper {
+    width: 90%;
+    height: 350px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.carouselWrapper .carouselHeader {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.vertical-align {
+    align-items: center;
+}
+
+.carouselWrapper .slick-slider .slick-arrow{
+    opacity: 0;
+    z-index: 1;
+    transition: opacity .5s;
+    display: flex;
+    margin-top: 0;
+}
+.carouselWrapper .slick-slider .slick-prev{
+    left: 0;
+    height: 100% !important;
+    width: calc(186px/2);
+    padding-left: 10px;
+}
+.carouselWrapper .slick-slider .slick-prev{
+    background: -moz-linear-gradient(left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right, rgba(26,26,26,0.85) 0%,rgba(26,26,26,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9000000', endColorstr='#00000000',GradientType=1 );
+}
+.carouselWrapper .slick-slider .slick-next{
+    right: 39px;
+    height: 100% !important;
+    width: calc(186px/2);
+    padding-right: 10px;
+}
+.carouselWrapper .slick-slider .slick-next{
+    background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%);
+    background: linear-gradient(to right, rgba(26,26,26,0) 0%,rgba(26,26,26,0.85) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d9000000',GradientType=1 );
+}
+
+.carouselWrapper .slick-slider:hover .slick-prev,
+.carouselWrapper .slick-slider:hover .slick-next{
+    opacity: 1;
+}
+.carouselWrapper .slick-slider .slick-prev.slick-disabled,
+.carouselWrapper .slick-slider .slick-next.slick-disabled{
+    opacity: 0;
+    display: none !important;
+}
+
+.carouselWrapper .slick-slider .slick-prev:before,
+.carouselWrapper .slick-slider .slick-next:before{
+    content: none;
+}
+
+.carouselWrapper .slick-slider .slick-arrow .arrowImg {
+    width: 18px;
+    height: 35px;
+}
+.carouselWrapper .slick-slider .slick-arrow.slick-next .arrowImg{
+    margin-left: auto;
+}
