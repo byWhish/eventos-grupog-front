@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Redirect, Route} from 'react-router-dom';
+import AppContext from "./context";
 
 const renderRouter = (component, ...rest) => {
     const props = Object.assign({}, ...rest);
     return React.createElement(component, props);
 };
 
-const PrivateRoute = ({ component, urls, ...rest }) => {
-    const { Auth } = rest;
+const PrivateRoute = ({ component, ...rest }) => {
+    const { rootStore: { Auth, configStore: { urls } } } = useContext(AppContext);
 
-    console.log('hola',Auth.isLoggedIn())
-
-    // if (!Auth.isLoggedIn()) return <Redirect to={{pathname: urls.login}} />;
+    if (!Auth.isLoggedIn()) return <Redirect to={{pathname: urls.login}} />;
 
     return (
         <Route
