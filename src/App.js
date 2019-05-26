@@ -12,6 +12,7 @@ import Loading from "./components/Loading";
 import Error from "./components/Error";
 import Auth0 from "./components/Auth0";
 import Home from "./components/Home";
+import PrivateRoute from "./utils/PrivateRoute";
 
 @observer
 class App extends Component {
@@ -31,10 +32,10 @@ class App extends Component {
     if (state === STATE_ERROR) return <Error />;
     return (
       <Switch>
-          <PropsRoute exact path={urls.root} component={Login} Auth={this.Auth} />
-          <PropsRoute exact path={urls.login} component={Login} Auth={this.Auth} />
-          <PropsRoute exact path={urls.auth} component={Auth0} Auth={this.Auth} />
-          <PropsRoute exact path={urls.home} component={Home} Auth={this.Auth} />
+          <PropsRoute exact path={urls.login} component={Login} urls={urls} Auth={this.Auth} />
+          <PropsRoute exact path={urls.auth} component={Auth0} urls={urls} Auth={this.Auth} />
+          <PrivateRoute exact path={urls.root} component={Login} urls={urls} Auth={this.Auth} />
+          <PrivateRoute exact path={urls.home} component={Home} urls={urls} Auth={this.Auth} />
           <Route component={Error404} />
       </Switch>
     );

@@ -20,6 +20,10 @@ export default class Auth {
         this.auth0.authorize();
     }
 
+    isLoggedIn() {
+        return this.idToken;
+    }
+
     getProfile(callBack) {
         this.auth0.client.userInfo(this.accessToken, (err, profile) => {
             if (profile) {
@@ -35,8 +39,9 @@ export default class Auth {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
                 Logger.of('handleAuthentication').trace('result:', authResult);
-            } else if (err) {
+                console.log('hola 1', this.idToken)
                 history.replace('/home');
+            } else if (err) {
                 Logger.of('handleAuthentication').error('error:', err);
                 alert(`Error: ${err.error}. Check the console for further details.`);
             }
