@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
     "auth0-js": "^9.10.2",
     "axios": "^0.18.0",
     "dotenv": "^8.0.0",
@@ -19,6 +20,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-select": "^2.4.3",
     "react-slick": "^0.24.0",
     "serve": "^11.0.0",
     "slick-carousel": "^1.8.1"

@@ -6,7 +6,8 @@
             "login": "/login",
             "logout": "/logout",
             "register": "/register",
-            "auth": "/auth"
+            "auth": "/auth",
+            "dipEvent": "/event"
         }
     }
 }
