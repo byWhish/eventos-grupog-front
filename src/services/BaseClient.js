@@ -9,7 +9,9 @@ class BaseClient {
             Authorization: auth.getIdToken(),
         };
 
-        return axios.get(config.apiUrl + endpoint, {params, headers, timeout})
+        const apiEndpoint = `${config.apiUrl}${endpoint}`;
+
+        return axios.get(apiEndpoint, {params, headers, timeout})
             .then(response => {
                 return response.data;
             })
