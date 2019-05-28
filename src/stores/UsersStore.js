@@ -20,9 +20,7 @@ class UsersStore {
     };
 
     fetchUsers() {
-        const endpoint = config.userAllEndpoint;
-
-        console.log('hola', endpoint, process.env)
+        const endpoint = '/user/all';
 
         BaseClient.get(this.auth, endpoint)
             .then(response => {
