@@ -1,6 +1,7 @@
 import {computed, observable} from "mobx";
 import BaseClient from "../services/BaseClient";
 import Logger from "../utils/Logger";
+import { config } from "../config";
 import {STATE_DONE, STATE_ERROR, STATE_PENDING} from "../config";
 
 class UsersStore {
@@ -19,8 +20,9 @@ class UsersStore {
     };
 
     fetchUsers() {
-        const endpoint = '/user/all';
+        const endpoint = config.userAllEndpoint;
 
+        console.log('hola', endpoint)
 
         BaseClient.get(this.auth, endpoint)
             .then(response => {
