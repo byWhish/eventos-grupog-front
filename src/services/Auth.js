@@ -53,6 +53,7 @@ export default class Auth {
                 history.replace('/home');
             } else if (err) {
                 Logger.of('handleAuthentication').error('error:', err);
+                history.replace('/login');
                 alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });

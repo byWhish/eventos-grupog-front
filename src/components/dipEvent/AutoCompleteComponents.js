@@ -175,7 +175,7 @@ const components = {
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        height: 250,
+        height: 50,
     },
     input: {
         display: 'flex',

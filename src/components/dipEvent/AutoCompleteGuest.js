@@ -6,15 +6,13 @@ import components, { useStyles } from './AutoCompleteComponents';
 import AppContext from "../../utils/context";
 import {observer} from "mobx-react-lite";
 
-const AutoCompleteGuest = observer(() => {
+const AutoCompleteGuest = observer(({ onSelectItem }) => {
     const value = useContext(AppContext);
     const { rootStore: { userStore } } = value;
     const classes = useStyles();
     const theme = useTheme();
     const [single, setSingle] = useState(null);
-    const [multi, setMulti] = useState(null);
-
-    console.log('hola', userStore.list)
+    // const [multi, setMulti] = useState(null);
 
     const fetchUsers = () => {
         userStore.fetchUsers();
@@ -22,13 +20,14 @@ const AutoCompleteGuest = observer(() => {
 
     useEffect(fetchUsers, []);
 
-    const handleChangeSingle = (value) => {
-        setSingle(value);
+    const handleChangeSingle = (item) => {
+        setSingle(item);
+        onSelectItem(item.value);
     }
 
-    const handleChangeMulti = (value) => {
-        setMulti(value);
-    }
+    // const handleChangeMulti = (value) => {
+    //     setMulti(value);
+    // }
 
     const selectStyles = {
         input: base => ({

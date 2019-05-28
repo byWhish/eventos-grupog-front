@@ -6,7 +6,7 @@ class BaseClient {
     static get = (auth, endpoint, params = null, timeout = config.defaultRequestTimeout) => {
 
         const headers = {
-            Authorization: null
+            Authorization: auth.getIdToken(),
         };
 
         return axios.get(config.apiUrl + endpoint, {params, headers, timeout})
@@ -18,13 +18,13 @@ class BaseClient {
             })
     };
 
-    static post = (auth, url, data = null, timeout = config.defaultRequestTimeout) => {
+    static post = (auth, endpoint, data = null, timeout = config.defaultRequestTimeout) => {
 
         const headers = {
-            Authorization: null
+            Authorization: auth.getIdToken(),
         };
 
-        return axios.post(config.apiUrl + url, data, {headers, timeout})
+        return axios.post(config.apiUrl + endpoint, data, {headers, timeout})
             .then(response => {
 
             })

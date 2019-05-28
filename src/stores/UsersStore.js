@@ -14,7 +14,7 @@ class UsersStore {
 
     processUsers = users => {
         users.forEach( user => {
-            this.users.set(user.email, user);
+            this.users.set(user.id, user);
         })
     };
 
@@ -35,12 +35,11 @@ class UsersStore {
     }
 
     @computed get list() {
-        console.log('hola', this.users)
         return Array.from(this.users).map(([, u]) => u);
     }
 
     @computed get userSuggestions() {
-        return this.list.map(user => ({value: user.email, label: `${user.name} ${user.surname}`}))
+        return this.list.map(user => ({value: user, label: `${user.name} ${user.surname}`}))
     }
 }
 
