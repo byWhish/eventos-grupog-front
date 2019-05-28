@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControlMultiline: {
         margin: theme.spacing(1),
-        minWidth: 500,
+        width: '90%',
     },
     textField: {
         marginLeft: theme.spacing(1),

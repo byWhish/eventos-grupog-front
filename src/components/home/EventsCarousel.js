@@ -40,11 +40,43 @@ const StripePrevArrow = ({ className, style, onClick }) => {
 
 const setting = {
     infinite: true,
+    centerMode: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 7,
     slidesToScroll: 1,
     nextArrow: <StripeNextArrow />,
-    prevArrow: <StripePrevArrow />
+    prevArrow: <StripePrevArrow />,
+    responsive: [
+            {
+                breakpoint: 1920,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                },
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: .5,
+                },
+            },
+        ]
 };
 
 const EventsCarousel = ({ title, events }) => {

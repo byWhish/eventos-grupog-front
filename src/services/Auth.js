@@ -17,6 +17,16 @@ export default class Auth {
     idToken;
     expiresAt;
 
+    constructor() {
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.handleAuthentication = this.handleAuthentication.bind(this);
+        this.isAuthenticated = this.isAuthenticated.bind(this);
+        this.getAccessToken = this.getAccessToken.bind(this);
+        this.getIdToken = this.getIdToken.bind(this);
+        this.renewSession = this.renewSession.bind(this);
+    }
+
     login() {
         this.auth0.authorize();
     }
@@ -40,7 +50,6 @@ export default class Auth {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 this.setSession(authResult);
                 Logger.of('handleAuthentication').trace('result:', authResult);
-                console.log('hola 1', this.idToken)
                 history.replace('/home');
             } else if (err) {
                 Logger.of('handleAuthentication').error('error:', err);

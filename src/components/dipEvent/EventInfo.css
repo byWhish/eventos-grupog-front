@@ -10,13 +10,25 @@
     align-self: flex-end;
 }
 
-.EventInfoWrapper .infoWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 90px;
-    width: 100%;
+@media only screen and (max-width: 1024px) {
+    .EventInfoWrapper .infoWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .EventInfoWrapper .infoWrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 90px;
+        width: 100%;
+    }
 }
 
 .EventInfoWrapper .eventDeadLine {
@@ -30,6 +42,7 @@
 
 .EventInfoWrapper .eventDeadLine .eventDeadLineDateTime {
     /*align-self: flex-start;*/
+    width: 300px;
 }
 
 
@@ -47,6 +60,14 @@
     /*display: flex;*/
     width: 300px;
 }
+
+.EventInfoWrapper .eventDescription {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 
 .MuiFormLabel-root {
     color: white !important;
