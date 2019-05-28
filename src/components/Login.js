@@ -5,6 +5,7 @@ const Login = () => {
     const value = useContext(AppContext);
     const { rootStore: { Auth: auth } } = value;
     auth.login();
+    return null;
 };
 
 export default Login;

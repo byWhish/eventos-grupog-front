@@ -18,6 +18,7 @@ import "slick-carousel/slick/slick-theme.css";
 import EventsStore from "./stores/EventsStore";
 import AppContext from './utils/context';
 import DipEvent from "./views/DipEvent";
+import UsersStore from "./stores/UsersStore";
 
 const context = {
     rootStore: {}
@@ -31,12 +32,18 @@ class App extends Component {
     context.rootStore = {
         Auth: this.Auth,
         configStore: new ConfigStore(),
-        eventStore: new EventsStore(this.Auth)
+        eventStore: new EventsStore(this.Auth),
+        userStore: new UsersStore(this.Auth)
     };
   };
 
   componentDidMount() {
+    const { renewSession } = this.Auth;
     context.rootStore.configStore.fetchConfig();
+
+    // if (localStorage.getItem('isLoggedIn') === 'true') {
+    //     renewSession();
+    // }
   }
 
   render() {

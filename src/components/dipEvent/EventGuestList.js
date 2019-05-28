@@ -1,6 +1,7 @@
 import React from 'react';
 import AutoCompleteGuest from "./AutoCompleteGuest";
 import './EventGuestList.css'
+import GuestsTable from "./GuestsTable";
 
 const EventGuestList = () => {
     return (

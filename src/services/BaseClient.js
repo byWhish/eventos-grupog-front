@@ -9,7 +9,7 @@ class BaseClient {
             Authorization: null
         };
 
-        return axios.get(endpoint, {params, headers, timeout})
+        return axios.get(config.apiUrl + endpoint, {params, headers, timeout})
             .then(response => {
                 return response.data;
             })
@@ -24,7 +24,7 @@ class BaseClient {
             Authorization: null
         };
 
-        return axios.post(url, data, {headers, timeout})
+        return axios.post(config.apiUrl + url, data, {headers, timeout})
             .then(response => {
 
             })
@@ -35,9 +35,9 @@ class BaseClient {
 
 
     static getConfig = () => {
-        return BaseClient.get(null, '/config/es-AR.json')
+        return axios.get('/config/es-AR.json')
             .then(response => {
-                return response;
+                return response.data;
             })
             .catch(error => {
                 console.log(error);
