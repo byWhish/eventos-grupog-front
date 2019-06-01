@@ -1,21 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import './UserProfile.css';
-import AppContext from "../../utils/context";
+import AppContext from '../../utils/context';
 
 const emptyProfile = {
-    name: 'No name'
+    name: 'No name',
 };
 
 const UserProfile = observer(() => {
-
     const { rootStore: { Auth } } = useContext(AppContext);
 
     const [userProfile, setUserProfile] = useState(null);
 
     const profileCallBack = (error, profile) => {
-        if ( profile ) setUserProfile(profile);
-        else setUserProfile(emptyProfile)
+        if (profile) setUserProfile(profile);
+        else setUserProfile(emptyProfile);
     };
 
     const fetchUserInfo = () => {
@@ -33,7 +32,7 @@ const UserProfile = observer(() => {
                 <img alt="" src={userProfile ? userProfile.picture : null} />
             </div>
         </div>
-    )
+    );
 });
 
 export default UserProfile;

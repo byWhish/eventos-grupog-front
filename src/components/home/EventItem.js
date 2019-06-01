@@ -3,18 +3,17 @@ import history from '../../utils/History';
 import './EventItem.css';
 
 const EventItem = ({ event }) => {
-
     const handleItemClick = () => {
-        history.push('#')
+        history.push('#');
     };
 
     return (
         <div className="eventWrapper">
-            <div className="eventItem" onClick={handleItemClick}>
+            <div className="eventItem" role="button" tabIndex={0} onClick={handleItemClick}>
                 {event.name}
             </div>
         </div>
-    )
+    );
 };
 
 export default EventItem;

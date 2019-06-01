@@ -9,7 +9,9 @@ class Event {
     owner = null;
     deadline = null;
 
-    constructor({ type, name, description, products, userIds, ownerId, deadline }) {
+    constructor({
+        type, name, description, products, userIds, ownerId, deadline,
+    }) {
         this.type = type;
         this.name = name;
         this.description = description;

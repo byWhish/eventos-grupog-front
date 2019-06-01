@@ -1,16 +1,13 @@
 import React from 'react';
-import UserProfile from "./userProfile/UserProfile";
-import './Navbar.css'
-import EventsMenu from "./EventsMenu";
+import UserProfile from './userProfile/UserProfile';
+import './Navbar.css';
+import EventsMenu from './EventsMenu';
 
-const NavBar = () => {
-
-    return (
-        <div className="eventsNavBar">
-            <EventsMenu />
-            <UserProfile />
-        </div>
-    )
-};
+const NavBar = () => (
+    <div className="eventsNavBar">
+        <EventsMenu />
+        <UserProfile />
+    </div>
+);
 
 export default NavBar;

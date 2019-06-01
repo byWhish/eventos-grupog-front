@@ -6,15 +6,11 @@ const renderRouter = (component, ...rest) => {
     return React.createElement(component, props);
 };
 
-const PropsRoute = ({ component, ...rest }) => {
-    return (
-        <Route
-            {...rest}
-            render={props => {
-                return renderRouter(component, props, rest);
-            }}
-        />
-    );
-};
+const PropsRoute = ({ component, ...rest }) => (
+    <Route
+        {...rest}
+        render={props => renderRouter(component, props, rest)}
+    />
+);
 
 export default PropsRoute;

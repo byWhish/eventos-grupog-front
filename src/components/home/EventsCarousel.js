@@ -1,6 +1,6 @@
 import React from 'react';
-import Slider from "react-slick";
-import EventItem from "./EventItem";
+import Slider from 'react-slick';
+import EventItem from './EventItem';
 import './EventsCarousel.css';
 
 
@@ -16,7 +16,7 @@ const StripeNextArrow = ({ className, style, onClick }) => {
 
     return (
         <div className={`${className} vertical-align`} style={{ ...style, display: 'flex' }} role="button" tabIndex={0} onClick={handleOnClick}>
-            <img src={'/img/arrowRight.svg'} className="arrowImg" alt="next" />
+            <img src="/img/arrowRight.svg" className="arrowImg" alt="next" />
         </div>
     );
 };
@@ -33,7 +33,7 @@ const StripePrevArrow = ({ className, style, onClick }) => {
 
     return (
         <div className={`${className} vertical-align`} style={{ ...style, display: 'flex' }} role="button" tabIndex={0} onClick={handleOnClick}>
-            <img src={'/img/arrowLeft.svg'} className="arrowImg" alt="next" />
+            <img src="/img/arrowLeft.svg" className="arrowImg" alt="next" />
         </div>
     );
 };
@@ -47,40 +47,40 @@ const setting = {
     nextArrow: <StripeNextArrow />,
     prevArrow: <StripePrevArrow />,
     responsive: [
-            {
-                breakpoint: 1920,
-                settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
-                },
+        {
+            breakpoint: 1920,
+            settings: {
+                slidesToShow: 5,
+                slidesToScroll: 1,
             },
-            {
-                breakpoint: 1280,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
+        },
+        {
+            breakpoint: 1280,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
 
-                },
             },
-            {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
+        },
+        {
+            breakpoint: 800,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
             },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: .5,
-                },
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 0.5,
             },
-        ]
+        },
+    ],
 };
 
 const EventsCarousel = ({ title, events }) => {
-    const eventsNode = events.map( e => (
+    const eventsNode = events.map(e => (
         <EventItem event={e} key={e.id} />
     ));
 
@@ -89,11 +89,11 @@ const EventsCarousel = ({ title, events }) => {
             <div className="carouselHeader">
                 {title}
             </div>
-            <Slider {...setting} >
+            <Slider {...setting}>
                 {eventsNode}
             </Slider>
         </div>
-    )
+    );
 };
 
 export default EventsCarousel;

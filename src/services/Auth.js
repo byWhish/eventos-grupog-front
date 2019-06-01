@@ -1,8 +1,8 @@
 import auth0 from 'auth0-js';
+import { observable } from 'mobx';
 import history from '../utils/History';
 import Logger from '../utils/Logger';
 import { config } from '../config';
-import { observable } from "mobx";
 
 export default class Auth {
     @observable userProfile;
@@ -11,7 +11,7 @@ export default class Auth {
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
         redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
-        scope: 'openid profile'
+        scope: 'openid profile',
     });
     accessToken;
     idToken;
@@ -54,7 +54,6 @@ export default class Auth {
             } else if (err) {
                 Logger.of('handleAuthentication').error('error:', err);
                 history.replace('/login');
-                alert(`Error: ${err.error}. Check the console for further details.`);
             }
         });
     }
@@ -72,7 +71,7 @@ export default class Auth {
         localStorage.setItem('isLoggedIn', 'true');
 
         // Set the time that the Access Token will expire at
-        let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
+        const expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
         this.accessToken = authResult.accessToken;
         this.idToken = authResult.idToken;
         this.expiresAt = expiresAt;
@@ -87,8 +86,7 @@ export default class Auth {
                 this.setSession(authResult);
             } else if (err) {
                 this.logout();
-                console.log(err);
-                alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+                Logger.of('renewSession').error('error:', err);
             }
         });
     }
@@ -103,7 +101,7 @@ export default class Auth {
         localStorage.removeItem('isLoggedIn');
 
         this.auth0.logout({
-            returnTo: window.location.origin
+            returnTo: window.location.origin,
         });
 
         // navigate to the home route
@@ -113,7 +111,7 @@ export default class Auth {
     isAuthenticated() {
         // Check whether the current time is past the
         // access token's expiry time
-        let expiresAt = this.expiresAt;
+        const { expiresAt } = this;
         return new Date().getTime() < expiresAt;
     }
 }

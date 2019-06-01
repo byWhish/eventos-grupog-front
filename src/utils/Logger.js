@@ -6,8 +6,8 @@ const Logger = {
         },
         trace: (...args) => {
             console.log(type, ' | ', ...args); // eslint-disable-line no-console
-        }
-    })
+        },
+    }),
 };
 
 export default Logger;

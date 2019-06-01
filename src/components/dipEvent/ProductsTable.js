@@ -6,8 +6,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import './GuestsTable.css';
-
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const GuestsTable = ({ items, setItems }) => {
+const ProductsTable = ({ items, setItems }) => {
     const classes = useStyles();
 
     const handleDeleteItem = (id) => {
@@ -33,8 +31,8 @@ const GuestsTable = ({ items, setItems }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Nombre</TableCell>
-                        <TableCell align="right">Apellido</TableCell>
-                        <TableCell align="right">Email</TableCell>
+                        <TableCell align="right">Precio</TableCell>
+                        <TableCell align="right">Rendimiento</TableCell>
                         <TableCell align="right">Borrar</TableCell>
                     </TableRow>
                 </TableHead>
@@ -45,7 +43,7 @@ const GuestsTable = ({ items, setItems }) => {
                             <TableCell align="right">{row.surname}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
                             <TableCell align="right">
-                                <span className="deleteLink" role="button" tabIndex={0} onClick={() => { handleDeleteItem(row.id); }}>Borrar</span>
+                                <a className="deleteLink" role="button" tabIndex={0} onClick={() => { handleDeleteItem(row.id); }}>Borrar</a>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -55,4 +53,4 @@ const GuestsTable = ({ items, setItems }) => {
     );
 };
 
-export default GuestsTable;
+export default ProductsTable;
