@@ -2,6 +2,11 @@
     width: 100%;
 }
 
+.guestListWrapper .templateWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 .MuiTypography-colorTextSecondary {
     color: rgba(255, 255 ,255 , 0.54) !important;
 }

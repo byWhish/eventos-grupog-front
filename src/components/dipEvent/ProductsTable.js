@@ -15,10 +15,11 @@ const useStyles = makeStyles(theme => ({
     },
     table: {
         minWidth: 400,
+        backgroundColor: 'rgba(0, 0, 0, .8)',
     },
 }));
 
-const ProductsTable = ({ items, setItems }) => {
+const ProductsTable = ({ items, setItems, deleteColumn }) => {
     const classes = useStyles();
 
     const handleDeleteItem = (id) => {
@@ -33,18 +34,22 @@ const ProductsTable = ({ items, setItems }) => {
                         <TableCell align="left">Nombre</TableCell>
                         <TableCell align="right">Precio</TableCell>
                         <TableCell align="right">Rendimiento</TableCell>
-                        <TableCell align="right">Borrar</TableCell>
+                        {deleteColumn && (
+                            <TableCell align="right">Borrar</TableCell>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {items.map(row => (
                         <TableRow key={row.name}>
                             <TableCell align="left">{row.name}</TableCell>
-                            <TableCell align="right">{row.surname}</TableCell>
-                            <TableCell align="right">{row.email}</TableCell>
-                            <TableCell align="right">
-                                <a className="deleteLink" role="button" tabIndex={0} onClick={() => { handleDeleteItem(row.id); }}>Borrar</a>
-                            </TableCell>
+                            <TableCell align="right">{row.price}</TableCell>
+                            <TableCell align="right">{row.amountLimit}</TableCell>
+                            {deleteColumn && (
+                                <TableCell align="right">
+                                    <a className="deleteLink" role="button" tabIndex={0} onClick={() => { handleDeleteItem(row.id); }}>Borrar</a>
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>

@@ -61,10 +61,10 @@ const EventInfo = ({ values, setValues }) => {
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
-                            <MenuItem value={1}>Fiesta</MenuItem>
-                            <MenuItem value={2}>Vaquita modalidad 1</MenuItem>
-                            <MenuItem value={3}>Vaquita modalidad 2</MenuItem>
-                            <MenuItem value={4}>Canasta</MenuItem>
+                            <MenuItem value="party">Fiesta</MenuItem>
+                            <MenuItem value="moneyCollection">Vaquita modalidad 1</MenuItem>
+                            <MenuItem value="commonAccount">Vaquita modalidad 2</MenuItem>
+                            <MenuItem value="basket">Canasta</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -87,12 +87,12 @@ const EventInfo = ({ values, setValues }) => {
                             label="Fecha y hora del evento"
                             type="datetime-local"
                             defaultValue=""
-                            value={values.datetime}
+                            value={values.heldAt}
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            onChange={handleInputChange('datetime')}
+                            onChange={handleInputChange('heldAt')}
                         />
                     </FormControl>
                 </div>

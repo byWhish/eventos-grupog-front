@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -7,7 +7,81 @@ import Typography from '@material-ui/core/Typography';
 import EventInfo from './EventInfo';
 import EventGuestList from './EventGuestList';
 import EventProductList from './EventProductList';
+import history from '../../utils/History';
 import './EventExpansionPanel.css';
+import AppContext from '../../utils/context';
+
+const EventExpansionPanels = () => {
+    const value = useContext(AppContext);
+    const { rootStore: { eventStore } } = value;
+    const [guests, setGuests] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [expanded, setExpanded] = React.useState('panel1');
+    const [eventInfo, setEventInfo] = useState({
+        type: '',
+        name: '',
+        heldAt: new Date(),
+        deadline: new Date(),
+        description: '',
+    });
+
+    const handleOnSelectGuest = (item) => {
+        setGuests([...guests, item]);
+    };
+
+    const handleOnSelectProduct = (item) => {
+        setProducts([...products, item]);
+    };
+
+    const handleOnSelectTemplate = (template) => {
+        setProducts(template.products);
+    };
+
+    const handleChange = panel => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
+
+    const handleBackClick = () => {
+        history.goBack();
+    };
+
+    const handleSendClick = () => {
+        eventStore.saveEvent({ eventInfo, guests, products });
+    };
+
+    return (
+        <div>
+            <div className="eventHeader">
+                <img alt="" className="backButton" src="/img/back-white.png" onClick={handleBackClick} />
+                <img alt="" className="sendButton" src="/img/send-white.png" onClick={handleSendClick} />
+            </div>
+            <ExpansionPanel square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <Typography>Informacion del evento</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <EventInfo values={eventInfo} setValues={setEventInfo} />
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <ExpansionPanel square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
+                    <Typography>Invitados</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <EventGuestList items={guests} setItems={setGuests} handleOnSelectGuest={handleOnSelectGuest} />
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <ExpansionPanel square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+                <ExpansionPanelSummary aria-controls="panel3d-content" id="panel3d-header">
+                    <Typography>Productos</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <EventProductList items={products} setItems={setProducts} handleOnSelectProduct={handleOnSelectProduct} handleOnSelectTemplate={handleOnSelectTemplate} />
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+        </div>
+    );
+};
 
 const ExpansionPanel = withStyles({
     root: {
@@ -51,63 +125,5 @@ const ExpansionPanelDetails = withStyles(theme => ({
         padding: theme.spacing(2),
     },
 }))(MuiExpansionPanelDetails);
-
-const EventExpansionPanels = () => {
-    const [guests, setGuests] = useState([]);
-    const [products, setProducts] = useState([]);
-    const [expanded, setExpanded] = React.useState('panel1');
-    const [values, setValues] = useState({
-        type: '',
-        name: '',
-        datetime: new Date(),
-        deadline: new Date(),
-        description: '',
-    });
-
-    const handleOnSelectGuest = (item) => {
-        setGuests([...guests, item]);
-    };
-
-    const handleOnSelectProduct = (item) => {
-        setProducts([...products, item]);
-    };
-
-    const handleChange = panel => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
-
-    return (
-        <div>
-            <div className="eventHeader">
-                <img alt="" className="backButton" src="/img/back-white.png" />
-                <img alt="" className="sendButton" src="/img/send-white.png" />
-            </div>
-            <ExpansionPanel square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>Informacion del evento</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                    <EventInfo values={values} setValues={setValues} />
-                </ExpansionPanelDetails>
-            </ExpansionPanel>
-            <ExpansionPanel square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-                <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Invitados</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                    <EventGuestList items={guests} setItems={setGuests} handleOnSelectGuest={handleOnSelectGuest} />
-                </ExpansionPanelDetails>
-            </ExpansionPanel>
-            <ExpansionPanel square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                <ExpansionPanelSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Productos</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                    <EventProductList products={products} setProducts={setProducts} handleOnSelectProduct={handleOnSelectProduct} />
-                </ExpansionPanelDetails>
-            </ExpansionPanel>
-        </div>
-    );
-};
 
 export default EventExpansionPanels;

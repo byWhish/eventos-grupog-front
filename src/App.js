@@ -19,6 +19,7 @@ import EventsStore from './stores/EventsStore';
 import AppContext from './utils/context';
 import DipEvent from './views/DipEvent';
 import UsersStore from './stores/UsersStore';
+import ProductsStore from "./stores/ProductsStore";
 
 const context = {
     rootStore: {},
@@ -34,16 +35,9 @@ class App extends Component {
             configStore: new ConfigStore(),
             eventStore: new EventsStore(this.Auth),
             userStore: new UsersStore(this.Auth),
+            productStore: new ProductsStore(this.Auth),
         };
-    }
-
-    componentDidMount() {
-        // const { renewSession } = this.Auth;
         context.rootStore.configStore.fetchConfig();
-
-    // if (localStorage.getItem('isLoggedIn') === 'true') {
-    //     renewSession();
-    // }
     }
 
     render() {

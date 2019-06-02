@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     },
     table: {
         minWidth: 400,
+        backgroundColor: 'rgba(0, 0, 0, .8)',
     },
 }));
 
