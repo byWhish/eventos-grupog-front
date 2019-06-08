@@ -12,6 +12,7 @@ export default class Auth {
         redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
         scope: 'openid profile',
+        audience: 'https://mybackend.com',
     });
     accessToken;
     idToken;
@@ -32,7 +33,8 @@ export default class Auth {
     }
 
     isLoggedIn() {
-        return this.idToken;
+        // return process.env.NODE_ENV === 'development' ? true : this.accessToken;
+        return this.accessToken;
     }
 
     getProfile(callBack) {
@@ -63,7 +65,7 @@ export default class Auth {
     }
 
     getIdToken() {
-        return `Bearer ${this.idToken}`;
+        return `Bearer ${this.accessToken}`;
     }
 
     setSession(authResult) {

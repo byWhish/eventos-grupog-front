@@ -19,11 +19,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsTable = ({ items, setItems, deleteColumn }) => {
+const ProductsTable = ({
+    items, setItems, deleteColumn, editColumn, setProduct,
+}) => {
     const classes = useStyles();
 
-    const handleDeleteItem = (id) => {
+    const handleDeleteItem = id => () => {
         setItems(items.filter(item => item.id !== id));
+    };
+
+    const handleEditItem = product => () => {
+        setProduct(product);
     };
 
     return (
@@ -35,6 +41,9 @@ const ProductsTable = ({ items, setItems, deleteColumn }) => {
                         <TableCell align="right">Precio</TableCell>
                         <TableCell align="right">Rendimiento</TableCell>
                         {deleteColumn && (
+                            <TableCell align="right">Editar</TableCell>
+                        )}
+                        {deleteColumn && (
                             <TableCell align="right">Borrar</TableCell>
                         )}
                     </TableRow>
@@ -45,9 +54,14 @@ const ProductsTable = ({ items, setItems, deleteColumn }) => {
                             <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="right">{row.price}</TableCell>
                             <TableCell align="right">{row.amountLimit}</TableCell>
+                            {editColumn && (
+                                <TableCell align="right">
+                                    <a className="deleteLink" role="button" tabIndex={0} onClick={handleEditItem(row)}>Editar</a>
+                                </TableCell>
+                            )}
                             {deleteColumn && (
                                 <TableCell align="right">
-                                    <a className="deleteLink" role="button" tabIndex={0} onClick={() => { handleDeleteItem(row.id); }}>Borrar</a>
+                                    <a className="deleteLink" role="button" tabIndex={0} onClick={handleDeleteItem(row.id)}>Borrar</a>
                                 </TableCell>
                             )}
                         </TableRow>

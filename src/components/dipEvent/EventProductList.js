@@ -4,6 +4,7 @@ import './EventGuestList.css';
 import ProductsTable from './ProductsTable';
 import AppContext from '../../utils/context';
 import ModalTemplate from './ModalTemplate';
+import ProductDetail from './ProductDetail';
 
 const EventProductList = ({
     items, setItems, handleOnSelectProduct, handleOnSelectTemplate,
@@ -11,6 +12,7 @@ const EventProductList = ({
     const [open, setOpen] = useState(false);
     const [template, setTemplate] = useState(null);
     const value = useContext(AppContext);
+    const [product, setProduct] = useState({});
     const { rootStore: { productStore } } = value;
     const { productSuggestions, templateSuggestions } = productStore;
     const productsPlaceHolder = 'Busca un producto';
@@ -27,6 +29,15 @@ const EventProductList = ({
         setOpen(true);
     };
 
+    const handleSetProduct = (product) => {
+        handleOnSelectProduct(product);
+        setProduct({
+            name: '',
+            price: '',
+            amountLimit: '',
+        });
+    };
+
     const onAccept = () => {
         handleOnSelectTemplate(template);
         setOpen(false);
@@ -39,8 +50,9 @@ const EventProductList = ({
     return (
         <div className="guestListWrapper">
             <AutoCompleteList options={templateSuggestions} onSelectItem={onSelectTemplate} placeHolder={templatePlaceHolder} />
-            <AutoCompleteList options={productSuggestions} onSelectItem={handleOnSelectProduct} placeHolder={productsPlaceHolder} />
-            <ProductsTable items={items} setItems={setItems} deleteColumn />
+            <AutoCompleteList options={productSuggestions} onSelectItem={setProduct} placeHolder={productsPlaceHolder} />
+            <ProductDetail product={product} setProduct={handleSetProduct} />
+            <ProductsTable items={items} setItems={setItems} setProduct={setProduct} editColumn deleteColumn />
             <ModalTemplate open={open} onAccept={onAccept} onCancel={onCancel} template={template} />
         </div>
     );

@@ -3,6 +3,7 @@
     flex: 1;
     justify-content: center;
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 .eventContainer .expansionPanelWrapper {
     display: flex;

@@ -30,7 +30,7 @@ class ProductsStore {
     }
 
     fetchProducts() {
-        const endpoint = '/product/all';
+        const endpoint = '/api/private/product/all';
 
         BaseClient.get(this.auth, endpoint)
             .then((response) => {
@@ -45,7 +45,7 @@ class ProductsStore {
     }
 
     fetchTemplates() {
-        const endpoint = '/product/templates';
+        const endpoint = '/api/private/product/templates';
 
         BaseClient.get(this.auth, endpoint)
             .then((response) => {

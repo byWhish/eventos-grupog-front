@@ -14,16 +14,16 @@ class Event {
         this.deadline = eventInfo.deadline;
         this.heldAt = eventInfo.heldAt;
         this.description = eventInfo.description;
-        this.userIds = this.extractGuestIds(guests);
-        this.products = this.removeIdsFromProducts(products);
+        this.userIds = Event.extractGuestIds(guests);
+        this.products = Event.removeIdsFromProducts(products);
         this.ownerId = 1;
     }
 
-    extractGuestIds(guests) {
+    static extractGuestIds(guests) {
         return guests.map(guest => guest.id);
     }
 
-    removeIdsFromProducts(products) {
+    static removeIdsFromProducts(products) {
         return products.map((product) => {
             delete product.id;
             return product;

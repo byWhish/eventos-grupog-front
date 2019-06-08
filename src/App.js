@@ -19,7 +19,7 @@ import EventsStore from './stores/EventsStore';
 import AppContext from './utils/context';
 import DipEvent from './views/DipEvent';
 import UsersStore from './stores/UsersStore';
-import ProductsStore from "./stores/ProductsStore";
+import ProductsStore from './stores/ProductsStore';
 
 const context = {
     rootStore: {},

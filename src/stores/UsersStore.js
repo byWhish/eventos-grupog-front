@@ -18,7 +18,7 @@ class UsersStore {
     };
 
     fetchUsers() {
-        const endpoint = '/user/all';
+        const endpoint = '/api/private/user/all';
 
         BaseClient.get(this.auth, endpoint)
             .then((response) => {
