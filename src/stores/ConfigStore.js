@@ -6,7 +6,7 @@ import {
 import Logger from '../utils/Logger';
 
 class ConfigStore {
-    @observable state = STATE_PENDING;
+    @observable state = null;
 
     constructor() {
         this.urls = null;
@@ -15,6 +15,7 @@ class ConfigStore {
     }
 
     fetchConfig() {
+        this.state = STATE_PENDING;
         BaseClient.getConfig()
             .then((response) => {
                 const { config } = response;

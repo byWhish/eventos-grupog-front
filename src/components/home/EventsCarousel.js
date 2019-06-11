@@ -9,6 +9,8 @@ const EventsCarousel = ({ title, events }) => {
         <EventItem event={e} key={e.id} />
     ));
 
+    if (!events.length) return null;
+
     return (
         <div className="carouselWrapper">
             <div className="carouselHeader">

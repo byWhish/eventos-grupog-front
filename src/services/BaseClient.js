@@ -9,7 +9,10 @@ class BaseClient {
         };
 
         return axios.get(config.apiUrl + endpoint, { params, headers, timeout })
-            .then(response => response.data)
+            .then((response) => {
+                Logger.of('get').trace('endpoint:', endpoint, 'response:', response);
+                return response.data;
+            })
             .catch((error) => {
                 Logger.of('get').error('endpoint:', endpoint, 'error:', error);
             });
@@ -22,7 +25,8 @@ class BaseClient {
 
         return axios.post(config.apiUrl + endpoint, data, { headers, timeout })
             .then((response) => {
-                Logger.of('post').error('endpoint:', endpoint, 'response:', response);
+                Logger.of('post').trace('endpoint:', endpoint, 'response:', response);
+                return response.data;
             })
             .catch((error) => {
                 Logger.of('post').error('error:', error);
