@@ -1,10 +1,14 @@
 .carouselWrapper {
     width: 90%;
-    height: 350px;
+    height: 370px;
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
+}
+
+.carouselWrapper .sliderWrapper {
+    height: 350px;
 }
 
 .carouselWrapper .carouselHeader {
@@ -16,6 +20,15 @@
 .vertical-align {
     align-items: center;
 }
+
+.carouselWrapper .slick-slider {
+    height: 100%;
+}
+
+.carouselWrapper .slick-slider .slick-list{
+    height: 100%;
+}
+
 
 .carouselWrapper .slick-slider .slick-arrow{
     opacity: 0;
