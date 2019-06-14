@@ -2,17 +2,36 @@ import { computed, observable, action } from 'mobx';
 import BaseClient from '../services/BaseClient';
 import Event from './Event';
 import Logger from '../utils/Logger';
+import { STATE_DONE, STATE_ERROR, STATE_PENDING } from '../config';
 
 class EventsStore {
     @observable popularEvents = new Map();
     @observable latestEvents = new Map();
     @observable onGoingEvents = new Map();
+    @observable state = null;
 
     constructor(Auth) {
         this.auth = Auth;
     }
 
+    init(userStore) {
+        this.state = STATE_PENDING;
+        userStore.authenticate()
+            .then((response) => {
+                Logger.of('init').trace('response:', response);
+                this.fetchPopularEvents();
+                this.fetchLatestEvents(response.id);
+                this.fetchOngoingEvents(response.id);
+                this.state = STATE_DONE;
+            })
+            .catch((error) => {
+                Logger.of('init').error('error:', error);
+                this.state = STATE_ERROR;
+            });
+    }
+
     saveEvent({ eventInfo, guests, products }) {
+        this.state = STATE_PENDING;
         const event = new Event({ eventInfo, guests, products });
 
         const endpoint = '/api/private/events';
@@ -20,9 +39,11 @@ class EventsStore {
         return BaseClient.post(this.auth, endpoint, event)
             .then((response) => {
                 Logger.of('saveEvent').trace('response:', response);
+                this.state = STATE_DONE;
             })
             .catch((error) => {
                 Logger.of('saveEvent').error('error:', error);
+                this.state = STATE_ERROR;
             });
     }
 

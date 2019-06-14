@@ -1,11 +1,12 @@
-import { computed, observable } from 'mobx';
+import { computed, observable, when } from 'mobx';
 import BaseClient from '../services/BaseClient';
 import Logger from '../utils/Logger';
 import { STATE_DONE, STATE_ERROR, STATE_PENDING } from '../config';
 
 class UsersStore {
     @observable users = new Map();
-    @observable state = STATE_PENDING;
+    @observable state = null;
+    @observable user = null;
 
     constructor(Auth) {
         this.auth = Auth;
@@ -17,9 +18,26 @@ class UsersStore {
         });
     };
 
-    fetchUsers() {
-        const endpoint = '/api/private/user/all';
+    authenticate() {
+        this.state = STATE_PENDING;
+        const data = { ...this.auth.userProfile };
+        const endpoint = '/api/private/user/auth';
+        return BaseClient.post(this.auth, endpoint, data)
+            .then((response) => {
+                Logger.of('authenticate').trace('endpoint:', endpoint, 'response:', response);
+                this.user = response;
+                this.state = STATE_DONE;
+                return response;
+            })
+            .catch((error) => {
+                this.state = STATE_ERROR;
+                Logger.of('authenticate').error('error', error);
+            });
+    }
 
+    fetchUsers() {
+        this.state = STATE_PENDING;
+        const endpoint = '/api/private/user/all';
         BaseClient.get(this.auth, endpoint)
             .then((response) => {
                 Logger.of('fetchUsers').trace('response', response);

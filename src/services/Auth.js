@@ -11,7 +11,7 @@ export default class Auth {
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
         redirectUri: config.authCallbackUri,
         responseType: 'token id_token',
-        scope: 'openid profile',
+        scope: 'openid profile email',
         audience: 'https://mybackend.com',
     });
     accessToken;
