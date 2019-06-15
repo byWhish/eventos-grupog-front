@@ -17,7 +17,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import EventsStore from './stores/EventsStore';
 import AppContext from './utils/context';
-import DipEvent from './views/DipEvent';
+import NewEvent from './views/NewEvent';
 import UsersStore from './stores/UsersStore';
 import ProductsStore from './stores/ProductsStore';
 
@@ -49,7 +49,7 @@ class App extends Component {
                 <Switch>
                     <PropsRoute exact path={urls.login} component={Login} />
                     <PropsRoute exact path={urls.auth} component={Auth0} />
-                    <PrivateRoute exact path={urls.dipEvent} component={DipEvent} />
+                    <PrivateRoute exact path={urls.dipEvent} component={NewEvent} />
                     <PrivateRoute exact path={urls.root} component={Login} />
                     <PrivateRoute exact path={urls.home} component={Home} />
                     <Route component={Error404} />

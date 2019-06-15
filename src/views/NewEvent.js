@@ -1,8 +1,8 @@
 import React from 'react';
-import EventExpansionPanels from '../components/dipEvent/EventExpansionPanel';
-import './DipEvent.css';
+import EventExpansionPanels from '../components/newEvent/EventExpansionPanel';
+import './NewEvent.css';
 
-const DipEvent = () => (
+const NewEvent = () => (
     <div className="eventContainer">
         <div className="expansionPanelWrapper">
             <EventExpansionPanels />
@@ -10,4 +10,4 @@ const DipEvent = () => (
     </div>
 );
 
-export default DipEvent;
+export default NewEvent;

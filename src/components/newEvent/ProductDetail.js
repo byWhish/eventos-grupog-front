@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductDetail = ({ product, setProduct }) => {
+const ProductDetail = ({ product, setProduct, handleProductClick }) => {
     const classes = useStyles();
 
 
@@ -24,7 +24,7 @@ const ProductDetail = ({ product, setProduct }) => {
     };
 
     const handleOnClick = () => {
-        setProduct(product);
+        handleProductClick(product);
     };
 
     return (
