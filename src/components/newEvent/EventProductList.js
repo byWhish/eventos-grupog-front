@@ -51,7 +51,7 @@ const EventProductList = ({
         <div className="guestListWrapper">
             <AutoCompleteList options={templateSuggestions} onSelectItem={onSelectTemplate} placeHolder={templatePlaceHolder} />
             <AutoCompleteList options={productSuggestions} onSelectItem={setProduct} placeHolder={productsPlaceHolder} />
-            <ProductDetail product={product} setProduct={handleSetProduct} />
+            <ProductDetail product={product} setProduct={setProduct} handleProductClick={handleSetProduct} />
             <ProductsTable items={items} setItems={setItems} setProduct={setProduct} editColumn deleteColumn />
             <ModalTemplate open={open} onAccept={onAccept} onCancel={onCancel} template={template} />
         </div>

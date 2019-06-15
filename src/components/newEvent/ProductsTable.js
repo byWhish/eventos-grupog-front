@@ -30,6 +30,7 @@ const ProductsTable = ({
 
     const handleEditItem = product => () => {
         setProduct(product);
+        handleDeleteItem(product.id).apply();
     };
 
     return (
