@@ -10,10 +10,13 @@ import EventProductList from './EventProductList';
 import history from '../../utils/History';
 import './EventExpansionPanel.css';
 import AppContext from '../../utils/context';
+import ModalLoading from '../ModalLoading';
 
 const EventExpansionPanels = () => {
     const value = useContext(AppContext);
-    const { rootStore: { eventStore } } = value;
+    const { rootStore: { eventStore, userStore } } = value;
+    const [open, setOpen] = useState(false);
+    const [eventId, setEventId] = useState(null);
     const [guests, setGuests] = useState([]);
     const [products, setProducts] = useState([]);
     const [expanded, setExpanded] = React.useState('panel1');
@@ -46,7 +49,14 @@ const EventExpansionPanels = () => {
     };
 
     const handleSendClick = () => {
-        eventStore.saveEvent({ eventInfo, guests, products });
+        const { user: owner } = userStore;
+        eventStore.saveEvent({
+            eventInfo, guests, products, owner,
+        })
+            .then((event) => {
+                setEventId(event.id);
+            });
+        setOpen(true);
     };
 
     return (
@@ -79,6 +89,7 @@ const EventExpansionPanels = () => {
                     <EventProductList items={products} setItems={setProducts} handleOnSelectProduct={handleOnSelectProduct} handleOnSelectTemplate={handleOnSelectTemplate} />
                 </ExpansionPanelDetails>
             </ExpansionPanel>
+            <ModalLoading eventStore={eventStore} open={open} setOpen={setOpen} eventId={eventId} />
         </div>
     );
 };

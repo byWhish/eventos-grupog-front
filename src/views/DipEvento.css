@@ -1,0 +1,99 @@
+.DipEvento {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+.DipEvento .leftPanel {
+    display: flex;
+    width: 300px;
+}
+
+.DipEvento .rightPanel {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.DipEvento .rightPanel .eventHeader {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border-bottom: solid 1px white;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .eventHeldAt {
+    border-left: solid 1px white;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .eventHeldAt span {
+    margin-left: 10px;
+}
+
+.DipEvento .rightPanel .eventInfo {
+    border-bottom: solid 1px white;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .ownerInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 10px;
+    height: 100%;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .ownerInfo .eventOwner{
+    display: flex;
+    font-weight: 500;
+    font-size: 20px;
+    border-bottom: solid 1px white;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .ownerInfo .eventDescription {
+    margin-top: 10px;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .guestInfo {
+    display: flex;
+    flex-direction: column;
+    border-left: solid 1px white;
+    height: 100%;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .guestInfo span {
+    margin-left: 10px;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .guestInfo .paymentInfo{
+    font-size: 40px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+}
+
+.DipEvento .rightPanel .eventInnerWrapper .guestInfo .assistInfo {
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+}
+
+.DipEvento .rightPanel .eventListsWrapper .guestList {
+    display: flex;
+    flex-direction: column;
+}
