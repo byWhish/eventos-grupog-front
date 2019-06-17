@@ -4,7 +4,7 @@ import './EventItem.css';
 
 const EventItem = ({ event }) => {
     const handleItemClick = () => {
-        history.push('#');
+        history.push(`/dipEvent/${event.id}`);
     };
 
     return (

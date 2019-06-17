@@ -5,10 +5,11 @@ import Logger from '../utils/Logger';
 import { STATE_DONE, STATE_ERROR, STATE_PENDING } from '../config';
 
 class EventsStore {
-    @observable popularEvents = new Map();
-    @observable latestEvents = new Map();
-    @observable onGoingEvents = new Map();
+    @observable events = new Map();
     @observable state = null;
+    @observable saveState = null;
+    @observable eventState = null;
+    userId = null;
 
     constructor(Auth) {
         this.auth = Auth;
@@ -22,6 +23,7 @@ class EventsStore {
                 this.fetchPopularEvents();
                 this.fetchLatestEvents(response.id);
                 this.fetchOngoingEvents(response.id);
+                this.userId = response.id;
                 this.state = STATE_DONE;
             })
             .catch((error) => {
@@ -30,20 +32,73 @@ class EventsStore {
             });
     }
 
-    saveEvent({ eventInfo, guests, products }) {
-        this.state = STATE_PENDING;
-        const event = new Event({ eventInfo, guests, products });
+
+    static extractGuestIds(guests) {
+        return guests.map(guest => guest.id);
+    }
+
+    static removeIdsFromProducts(products) {
+        return products.map((product) => {
+            delete product.id;
+            return product;
+        });
+    }
+
+    static processNewEvent({
+        products, guests, owner, ...rest
+    }) {
+        return {
+            ...rest, products: EventsStore.removeIdsFromProducts(products), guests: EventsStore.extractGuestIds(guests), ownerId: owner.id,
+        };
+    }
+
+    saveEvent({
+        eventInfo, guests, products, owner,
+    }) {
+        this.saveState = STATE_PENDING;
+        const event = EventsStore.processNewEvent({
+            ...eventInfo, guests, products, owner,
+        });
 
         const endpoint = '/api/private/events';
 
         return BaseClient.post(this.auth, endpoint, event)
             .then((response) => {
                 Logger.of('saveEvent').trace('response:', response);
-                this.state = STATE_DONE;
+                this.saveState = STATE_DONE;
+                return response;
             })
             .catch((error) => {
                 Logger.of('saveEvent').error('error:', error);
-                this.state = STATE_ERROR;
+                this.saveState = STATE_ERROR;
+            });
+    }
+
+    fetchEvent(id) {
+        this.eventState = STATE_PENDING;
+        const endpoint = `/api/private/events/${id}`;
+
+        return BaseClient.get(this.auth, endpoint)
+            .then((response) => {
+                this.eventState = STATE_DONE;
+                return response;
+            })
+            .catch((error) => {
+                Logger.of('fetchEvent').error('error:', error);
+                this.eventState = STATE_ERROR;
+            });
+    }
+
+    fethcGuestAmountToPay(event, guest) {
+        const endpoint = `/amountToPay/${guest.id}`;
+
+        return BaseClient.get(this.auth, endpoint)
+            .then((response) => {
+                Logger.of('fethcGuestAmountToPay').trace('response:', response);
+                return response;
+            })
+            .catch((error) => {
+                Logger.of('fethcGuestAmountToPay').error('error:', error);
             });
     }
 
@@ -52,7 +107,7 @@ class EventsStore {
 
         return BaseClient.get(this.auth, endpoint)
             .then((response) => {
-                this.processEvents(response, this.popularEvents);
+                this.processEvents(response, { popular: true });
                 Logger.of('fetchPopularEvents').trace('endpoint:', endpoint, 'response:', response);
             })
             .catch((error) => {
@@ -65,7 +120,7 @@ class EventsStore {
 
         return BaseClient.get(this.auth, endpoint)
             .then((response) => {
-                this.processEvents(response, this.latestEvents);
+                this.processEvents(response, { latest: true });
                 Logger.of('fetchLatestEvents').trace('endpoint:', endpoint, 'response:', response);
             })
             .catch((error) => {
@@ -78,7 +133,7 @@ class EventsStore {
 
         return BaseClient.get(this.auth, endpoint)
             .then((response) => {
-                this.processEvents(response, this.onGoingEvents);
+                this.processEvents(response, { ongoing: true });
                 Logger.of('fetchOngoingEvents').trace('endpoint:', endpoint, 'response:', response);
             })
             .catch((error) => {
@@ -86,22 +141,37 @@ class EventsStore {
             });
     }
 
-    processEvents(events, eventMap) {
+    processEvents(events, type) {
         events.forEach((event) => {
-            eventMap.set(event.id, event);
+            const finded = this.events.get(event.id);
+            if (finded) this.events.set(event.id, new Event({ ...finded, ...event, ...type }));
+            else this.events.set(event.id, new Event({ ...event, ...type }));
         });
     }
 
     @computed get popularList() {
-        return Array.from(this.popularEvents).map(([, p]) => p);
+        return Array.from(this.events).map(([, p]) => p).filter(p => p.popular);
     }
 
     @computed get latestList() {
-        return Array.from(this.latestEvents).map(([, l]) => l);
+        return Array.from(this.events).map(([, l]) => l).filter(p => p.latest);
     }
 
     @computed get ongoingList() {
-        return Array.from(this.onGoingEvents).map(([, o]) => o);
+        return Array.from(this.events).map(([, o]) => o).filter(p => p.ongoing);
+    }
+
+    getEvent(id) {
+        const event = this.events.get(parseInt(id, 10));
+        if (event) {
+            this.eventState = STATE_DONE;
+            return event;
+        }
+        return this.fetchEvent(id);
+    }
+
+    getEventGuest(id) {
+        return this.getEvent(id).guests.find(guest => guest.user.id === this.userId);
     }
 }
 

@@ -1,13 +1,14 @@
 {
     "config": {
         "urls": {
-            "root": "/",
-            "home": "/home",
-            "login": "/login",
-            "logout": "/logout",
-            "register": "/register",
-            "auth": "/auth",
-            "dipEvent": "/event"
+          "root": "/",
+          "home": "/home",
+          "login": "/login",
+          "logout": "/logout",
+          "register": "/register",
+          "auth": "/auth",
+          "newEvent": "/event",
+          "dipEvent":"/dipEvent/:id"
         }
     }
 }
