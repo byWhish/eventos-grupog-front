@@ -1,5 +1,6 @@
 import auth0 from 'auth0-js';
 import { observable } from 'mobx';
+import Cookies from 'universal-cookie';
 import history from '../utils/History';
 import Logger from '../utils/Logger';
 import { config } from '../config';
@@ -78,6 +79,8 @@ export default class Auth {
         this.idToken = authResult.idToken;
         this.expiresAt = expiresAt;
 
+        const cookie = new Cookies();
+        cookie.set('id_token', this.accessToken);
         // navigate to the home route
         history.replace('/home');
     }

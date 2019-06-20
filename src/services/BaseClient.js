@@ -34,6 +34,16 @@ class BaseClient {
     };
 
 
+    static postPublic = (endpoint, data = null, timeout = config.defaultRequestTimeout, params) => axios.post(config.apiUrl + endpoint, data, { timeout, params })
+        .then((response) => {
+            Logger.of('postPublic').trace('endpoint:', endpoint, 'response:', response);
+            return response.data;
+        })
+        .catch((error) => {
+            Logger.of('postPublic').error('error:', error);
+        });
+
+
     static getConfig = () => axios.get('/config/es-AR.json')
         .then(response => response.data)
         .catch((error) => {

@@ -7,10 +7,10 @@ const GuestItem = ({ guest }) => (
             <img src="/img/guest.png" alt="" />
         </div>
         <div className="guestName">
-            <span>{guest.name}</span>
+            <span>{guest.user.name}</span>
         </div>
         <div className="guestAssistIcon">
-            <img src={`/img/${guest.confirmedAssistance ? 'accept.svg' : 'cancel.png'}`} alt="" />
+            <img src={`/img/${guest.confirmedAssistance ? 'accept.png' : 'cancel.png'}`} alt="" />
         </div>
     </div>
 );

@@ -8,7 +8,8 @@
           "register": "/register",
           "auth": "/auth",
           "newEvent": "/event",
-          "dipEvent":"/dipEvent/:id"
+          "dipEvent":"/dipEvent/:id",
+          "confirm": "/confirm"
         }
     }
 }

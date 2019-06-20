@@ -6,7 +6,8 @@ import AppContext from '../utils/context';
 import { STATE_PENDING } from '../config';
 import Loading from '../components/Loading';
 import './DipEvento.css';
-import GuestItem from "../components/dipEvent/GuestItem";
+import GuestItem from '../components/dipEvent/GuestItem';
+import ModalLoading from '../components/ModalLoading';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -22,6 +23,7 @@ const DipEvent = observer(({ match }) => {
     const classes = useStyles();
     const value = useContext(AppContext);
     const [amount, setAmount] = useState(1);
+    const [open, setOpen] = useState(false);
     const { rootStore: { eventStore } } = value;
     const { params: { id } } = match;
     const event = eventStore.getEvent(id);
@@ -35,7 +37,12 @@ const DipEvent = observer(({ match }) => {
     };
 
     const handlePayClick = () => {
+        setOpen(true);
+    };
 
+    const handleConfirmClick = () => {
+        setOpen(true);
+        eventStore.fetchGuestConfirm(guest.id);
     };
 
     useEffect(fetchAmountToPay, []);
@@ -73,7 +80,7 @@ const DipEvent = observer(({ match }) => {
                                 <span className="deadline">{event.deadline}</span>
                                 {guest.confirmedAssistance
                                     ? <span>Confirmed</span>
-                                    : <Button variant="contained" className={classes.button} onClick={handlePayClick}>Confirmar asistencia</Button>}
+                                    : <Button variant="contained" className={classes.button} onClick={handleConfirmClick}>Confirmar asistencia</Button>}
                             </div>
                         </div>
                     </div>
@@ -86,6 +93,7 @@ const DipEvent = observer(({ match }) => {
                     </div>
                 </div>
             </div>
+            <ModalLoading state={eventStore.confirState} open={open} setOpen={setOpen} />
         </div>
     );
 });

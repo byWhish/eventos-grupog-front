@@ -21,6 +21,7 @@ import NewEvent from './views/NewEvent';
 import UsersStore from './stores/UsersStore';
 import ProductsStore from './stores/ProductsStore';
 import DipEvent from "./views/DipEvent";
+import Assist from "./views/Assists";
 
 const context = {
     rootStore: {},
@@ -50,6 +51,7 @@ class App extends Component {
                 <Switch>
                     <PropsRoute exact path={urls.login} component={Login} />
                     <PropsRoute exact path={urls.auth} component={Auth0} />
+                    <PropsRoute exact path={urls.confirm} component={Assist} />
                     <PrivateRoute exact path={urls.newEvent} component={NewEvent} />
                     <PrivateRoute exact path={urls.root} component={Login} />
                     <PrivateRoute exact path={urls.home} component={Home} />

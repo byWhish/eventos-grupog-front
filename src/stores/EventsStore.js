@@ -9,6 +9,7 @@ class EventsStore {
     @observable state = null;
     @observable saveState = null;
     @observable eventState = null;
+    @observable confirState = null;
     userId = null;
 
     constructor(Auth) {
@@ -90,7 +91,7 @@ class EventsStore {
     }
 
     fethcGuestAmountToPay(event, guest) {
-        const endpoint = `/amountToPay/${guest.id}`;
+        const endpoint = `/api/private/amountToPay/${guest.id}`;
 
         return BaseClient.get(this.auth, endpoint)
             .then((response) => {
@@ -172,6 +173,57 @@ class EventsStore {
 
     getEventGuest(id) {
         return this.getEvent(id).guests.find(guest => guest.user.id === this.userId);
+    }
+
+
+    fetchGuestConfirm(id) {
+        this.confirState = STATE_PENDING;
+        const endpoint = `/api/private/confirmAssistance/${id}`;
+
+        return BaseClient.post(this.auth, endpoint)
+            .then((response) => {
+                this.confirState = STATE_DONE;
+                const { event } = response;
+                const findedGuest = this.getEventGuest(event.id);
+                findedGuest.confirmedAssistance = true;
+            })
+            .catch((error) => {
+                this.confirState = STATE_ERROR;
+                Logger.of('fetchGuestConfirm').error('error:', error);
+            });
+    }
+
+    fetchGuestPayment(id, amount) {
+        this.paymentState = STATE_PENDING;
+
+        const data = {
+            amount,
+        };
+
+        const endpoint = `/api/private/pay/${id}`;
+        return BaseClient.post(this.auth, endpoint, data)
+            .then((response) => {
+                this.paymentState = STATE_DONE;
+                Logger.of('fetchGuestPayment').trace('response:', response);
+                return response;
+            })
+            .catch((error) => {
+                Logger.of('fetchGuestPayment').error('errpr:', error);
+                this.paymentState = STATE_ERROR;
+            });
+    }
+
+    static fetchGuestConfirmPublic(guestHash) {
+        const endpoint = '/api/public/confirmAssistance';
+        const params = {
+            hash: guestHash,
+        };
+
+        return BaseClient.postPublic(endpoint, null, null, params)
+            .then(response => response)
+            .catch((error) => {
+                Logger.of('fetchGuestConfirm').error('error:', error);
+            });
     }
 }
 

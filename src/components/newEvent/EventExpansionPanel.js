@@ -89,7 +89,7 @@ const EventExpansionPanels = () => {
                     <EventProductList items={products} setItems={setProducts} handleOnSelectProduct={handleOnSelectProduct} handleOnSelectTemplate={handleOnSelectTemplate} />
                 </ExpansionPanelDetails>
             </ExpansionPanel>
-            <ModalLoading eventStore={eventStore} open={open} setOpen={setOpen} eventId={eventId} />
+            <ModalLoading state={eventStore.eventState} open={open} setOpen={setOpen} eventId={eventId} />
         </div>
     );
 };

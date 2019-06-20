@@ -37,7 +37,7 @@ class Event {
     }
 
     @computed get guestsList() {
-        return this.guests.map(guest => guest.user);
+        return this.guests.map(guest => guest);
     }
 }
 

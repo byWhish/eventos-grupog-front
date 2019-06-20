@@ -7,7 +7,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { observer } from 'mobx-react-lite';
-import history from '../utils/History';
 import { STATE_DONE, STATE_ERROR, STATE_PENDING } from '../config';
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="down" ref={ref} {...props} />);
@@ -20,13 +19,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ModalLoading = observer(({
-    eventStore, setOpen, open, eventId,
+    state, setOpen, open,
 }) => {
     const classes = useStyles();
 
     const handleAccept = () => {
         setOpen(false);
-        // if (eventId) history.push(`/dipEvent/${eventId}`);
     };
 
     const handleCancel = () => {
@@ -34,7 +32,7 @@ const ModalLoading = observer(({
     };
 
     let contentNode;
-    switch (eventStore.saveState) {
+    switch (state) {
         case STATE_DONE:
             contentNode = <div>Done</div>;
             break;
