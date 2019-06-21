@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import './DipEvento.css';
 import GuestItem from '../components/dipEvent/GuestItem';
 import ModalLoading from '../components/ModalLoading';
+import {toFixedLocale, toLocalDateTime} from "../utils/local";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -59,7 +60,7 @@ const DipEvent = observer(({ match }) => {
                             <span>{event.name}</span>
                         </div>
                         <div className="eventHeldAt">
-                            <span>{event.heldAt}</span>
+                            <span>{toLocalDateTime(event.heldAt)}</span>
                         </div>
                     </div>
                 </div>
@@ -71,13 +72,13 @@ const DipEvent = observer(({ match }) => {
                         </div>
                         <div className="guestInfo">
                             <div className="paymentInfo">
-                                <span>{guest.user.account.balance}</span>
+                                <span>{toFixedLocale(guest.user.account.balance)}</span>
                                 <Button variant="contained" className={classes.button} onClick={handlePayClick}>Agregar fondos</Button>
-                                <span>{amount}</span>
+                                <span>{toFixedLocale(amount)}</span>
                                 <Button variant="contained" className={classes.button} onClick={handlePayClick}>Pagar</Button>
                             </div>
                             <div className="assistInfo">
-                                <span className="deadline">{event.deadline}</span>
+                                <span className="deadline">{event.deadline.toLocaleDateString()}</span>
                                 {guest.confirmedAssistance
                                     ? <span>Confirmed</span>
                                     : <Button variant="contained" className={classes.button} onClick={handleConfirmClick}>Confirmar asistencia</Button>}

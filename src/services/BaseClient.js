@@ -44,12 +44,17 @@ class BaseClient {
         });
 
 
-    static getConfig = () => axios.get('/config/es-AR.json')
+    static getConfig = lang => axios.get(`/config/${lang}-AR.json`)
         .then(response => response.data)
         .catch((error) => {
             Logger.of('getConfig').error('error:', error);
             throw Error;
         })
+
+    static getGeoLocation = () => axios.get('http://gd.geobytes.com/GetCityDetails')
+        .then(response => response.data)
+        .catch(error => Logger.of('getGeoLocation').error('error:', error))
 }
+
 
 export default BaseClient;

@@ -10,6 +10,13 @@
           "newEvent": "/event",
           "dipEvent":"/dipEvent/:id",
           "confirm": "/confirm"
+        },
+      "lang": {
+        "home": {
+          "nextEvents": "Mis proximos eventos",
+          "popularEvents": "Eventos mas populares",
+          "lastestEvents": "Mis eventos pasados"
         }
+      }
     }
 }

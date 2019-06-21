@@ -20,8 +20,8 @@ class Event {
         this.id = id;
         this.type = type;
         this.name = name;
-        this.deadline = deadline;
-        this.heldAt = heldAt;
+        this.deadline = new Date(deadline);
+        this.heldAt = new Date(heldAt);
         this.description = description;
         this.guests = guests;
         this.products = products;
