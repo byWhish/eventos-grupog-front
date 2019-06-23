@@ -1,0 +1,17 @@
+.loanWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+}
+
+.loanWrapper .accountBalance {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.loanWrapper .plusAmount {
+    color: green;
+}
+
+.loanWrapper .installmentsInfo {
+}

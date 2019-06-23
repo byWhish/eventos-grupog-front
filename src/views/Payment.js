@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { observer } from 'mobx-react-lite';
 import AppContext from '../utils/context';
 import { toFixedLocale } from '../utils/local';
+import history from '../utils/History';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -33,6 +34,10 @@ const Payment = observer(() => {
 
     const handleAddFoundsClick = () => {
         userStore.postFounds(financialEntity, amount);
+    };
+
+    const handleAddFounds = () => {
+        history.push('/requestLoan');
     };
 
     const handleInputChange = (event) => {
@@ -75,6 +80,7 @@ const Payment = observer(() => {
                 </FormControl>
             </div>
             <Button variant="contained" className={classes.button} onClick={handleAddFoundsClick}>Agregar fondos</Button>
+            <Button variant="contained" className={classes.button} onClick={handleAddFounds}>Solicitar prestamo</Button>
         </div>
     );
 });

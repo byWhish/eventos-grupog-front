@@ -80,6 +80,21 @@ class UsersStore {
             });
     }
 
+    postRequestLoan() {
+        this.foundsState = STATE_PENDING;
+        const endPoint = `/api/private/loans/${this.user.id}`;
+        BaseClient.post(this.auth, endPoint, {})
+            .then((response) => {
+                this.foundsState = STATE_DONE;
+                this.fetchAccount();
+                return response;
+            })
+            .catch((error) => {
+                this.foundsState = STATE_ERROR;
+                Logger.of('requestLoan').error('error:', error);
+            });
+    }
+
     @computed get list() {
         return Array.from(this.users).map(([, u]) => u);
     }
