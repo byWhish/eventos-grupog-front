@@ -1,0 +1,23 @@
+.paymentWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+}
+
+.paymentWrapper .accountBalance {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.paymentWrapper .paymentTypes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.paymentWrapper .paymentTypes img {
+    height: 200px;
+}
+
+

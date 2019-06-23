@@ -9,13 +9,22 @@
           "auth": "/auth",
           "newEvent": "/event",
           "dipEvent":"/dipEvent/:id",
-          "confirm": "/confirm"
+          "confirm": "/confirm",
+          "payment": "/payment"
         },
       "lang": {
         "home": {
           "nextEvents": "Mis proximos eventos",
           "popularEvents": "Eventos mas populares",
           "lastestEvents": "Mis eventos pasados"
+        },
+        "buttons": {
+          "accept": "Aceptar",
+          "pay": "Pagar",
+          "addFounds": "Agregar fondos",
+          "add": "Agregar",
+          "cancelr": "Cancelar"
+
         }
       }
     }

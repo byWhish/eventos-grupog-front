@@ -176,7 +176,7 @@ class EventsStore {
     }
 
 
-    fetchGuestConfirm(id) {
+    postGuestConfirm(id) {
         this.confirState = STATE_PENDING;
         const endpoint = `/api/private/confirmAssistance/${id}`;
 
@@ -190,6 +190,21 @@ class EventsStore {
             .catch((error) => {
                 this.confirState = STATE_ERROR;
                 Logger.of('fetchGuestConfirm').error('error:', error);
+            });
+    }
+
+    postGuestPayment(id) {
+        this.paymentState = STATE_PENDING;
+        const endpoint = `/api/private/payEvent/${id}`;
+
+        return BaseClient.post(this.auth, endpoint)
+            .then((response) => {
+                this.paymentState = STATE_DONE;
+                return response;
+            })
+            .catch((error) => {
+                this.paymentState = STATE_ERROR;
+                Logger.of('postGuestPayment').error('error:', error);
             });
     }
 

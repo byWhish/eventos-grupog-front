@@ -1,8 +1,6 @@
 .eventWrapper {
     height: 300px;
     width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 .eventWrapper .eventItem {
@@ -16,8 +14,31 @@
     transition: all .2s;
 }
 
+.eventWrapper .eventItem:hover .mask,
 .eventWrapper .eventItem:hover {
     transform: scale(1.2) translateY(10px);
+    transition: all .2s;
+}
+
+.eventWrapper .eventItem .eventInfo {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: 1;
+}
+
+.eventWrapper .eventItem:hover .mask {
+    opacity: 1;
+    transition: all .2s;
+}
+
+.eventWrapper .eventItem .mask {
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(26, 26, 26, 0), rgba(26, 26, 26, 0.74) 80%,#1a1a1a);
+    width: 200px;
+    height: 300px;
+    opacity: 0;
     transition: all .2s;
 }
 

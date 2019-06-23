@@ -8,7 +8,9 @@ import Loading from '../components/Loading';
 import './DipEvento.css';
 import GuestItem from '../components/dipEvent/GuestItem';
 import ModalLoading from '../components/ModalLoading';
-import {toFixedLocale, toLocalDateTime} from "../utils/local";
+import { toFixedLocale, toLocalDateTime } from '../utils/local';
+import history from '../utils/History';
+import UsersStore from "../stores/UsersStore";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -25,10 +27,11 @@ const DipEvent = observer(({ match }) => {
     const value = useContext(AppContext);
     const [amount, setAmount] = useState(1);
     const [open, setOpen] = useState(false);
-    const { rootStore: { eventStore } } = value;
+    const { rootStore: { eventStore, userStore } } = value;
     const { params: { id } } = match;
     const event = eventStore.getEvent(id);
     const guest = eventStore.getEventGuest(id);
+    const user = userStore.user;
 
     const fetchAmountToPay = () => {
         eventStore.fethcGuestAmountToPay(event, guest)
@@ -39,11 +42,16 @@ const DipEvent = observer(({ match }) => {
 
     const handlePayClick = () => {
         setOpen(true);
+        eventStore.postGuestPayment(guest.id);
+    };
+
+    const handleAddFounds = () => {
+        history.push('/payment');
     };
 
     const handleConfirmClick = () => {
         setOpen(true);
-        eventStore.fetchGuestConfirm(guest.id);
+        eventStore.postGuestConfirm(guest.id);
     };
 
     useEffect(fetchAmountToPay, []);
@@ -72,8 +80,8 @@ const DipEvent = observer(({ match }) => {
                         </div>
                         <div className="guestInfo">
                             <div className="paymentInfo">
-                                <span>{toFixedLocale(guest.user.account.balance)}</span>
-                                <Button variant="contained" className={classes.button} onClick={handlePayClick}>Agregar fondos</Button>
+                                <span>{toFixedLocale(user.account.balance)}</span>
+                                <Button variant="contained" className={classes.button} onClick={handleAddFounds}>Agregar fondos</Button>
                                 <span>{toFixedLocale(amount)}</span>
                                 <Button variant="contained" className={classes.button} onClick={handlePayClick}>Pagar</Button>
                             </div>

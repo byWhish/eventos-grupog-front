@@ -50,6 +50,36 @@ class UsersStore {
             });
     }
 
+    postFounds(financialEntity, amount) {
+        this.foundsState = STATE_PENDING;
+        const endPoint = '/api/private/movement/external/credit';
+        const data = {
+            companyName: financialEntity,
+            amount,
+            accountId: this.user.account.id,
+            description: 'Add founds',
+        };
+        BaseClient.post(this.auth, endPoint, data)
+            .then((response) => {
+                this.foundsState = STATE_DONE;
+                this.fetchAccount();
+                return response;
+            })
+            .catch((error) => {
+                this.foundsState = STATE_ERROR;
+                Logger.of('postFounds').error('error:', error);
+            });
+    }
+
+    fetchAccount() {
+        const endpoint = `/api/private/movement/account/${this.user.account.id}`;
+
+        BaseClient.get(this.auth, endpoint)
+            .then((response) => {
+                this.user.account = response;
+            });
+    }
+
     @computed get list() {
         return Array.from(this.users).map(([, u]) => u);
     }

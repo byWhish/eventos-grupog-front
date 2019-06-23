@@ -17,7 +17,17 @@ export const toLocalDateTime = (date, lang, country) => {
         month: 'long',
         day: 'numeric',
         hour: 'numeric',
-        minute: 'numeric'
+        minute: 'numeric',
+    };
+    return date.toLocaleDateString('es-AR', options);
+};
+
+export const toLocalDateTimeShort = (date, lang, country) => {
+    const options = {
+        weekday: 'short',
+        year: '2-digit',
+        month: 'short',
+        day: 'numeric',
     };
     return date.toLocaleDateString('es-AR', options);
 };
