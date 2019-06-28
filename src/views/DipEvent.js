@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+    useContext, useEffect, useState,
+} from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import { observer } from 'mobx-react-lite';
@@ -10,7 +12,9 @@ import GuestItem from '../components/dipEvent/GuestItem';
 import ModalLoading from '../components/ModalLoading';
 import { toFixedLocale, toLocalDateTime } from '../utils/local';
 import history from '../utils/History';
-import UsersStore from "../stores/UsersStore";
+import MoneyCollection from '../components/Guest/MoneyCollection';
+import ConfirmNode from '../components/Guest/ConfirmNode';
+import GuestInfo from "../components/Guest/GuestInfo";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -22,39 +26,19 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const handleAddFounds = () => {
+    history.push('/payment');
+};
+
 const DipEvent = observer(({ match }) => {
     const classes = useStyles();
     const value = useContext(AppContext);
-    const [amount, setAmount] = useState(1);
     const [open, setOpen] = useState(false);
     const { rootStore: { eventStore, userStore } } = value;
     const { params: { id } } = match;
     const event = eventStore.getEvent(id);
     const guest = eventStore.getEventGuest(id);
-    const user = userStore.user;
-
-    const fetchAmountToPay = () => {
-        eventStore.fethcGuestAmountToPay(event, guest)
-            .then((result) => {
-                setAmount(result);
-            });
-    };
-
-    const handlePayClick = () => {
-        setOpen(true);
-        eventStore.postGuestPayment(guest.id);
-    };
-
-    const handleAddFounds = () => {
-        history.push('/payment');
-    };
-
-    const handleConfirmClick = () => {
-        setOpen(true);
-        eventStore.postGuestConfirm(guest.id);
-    };
-
-    useEffect(fetchAmountToPay, []);
+    const { user } = userStore;
 
     if (eventStore.eventState === STATE_PENDING) return <Loading />;
 
@@ -79,18 +63,20 @@ const DipEvent = observer(({ match }) => {
                             <div className="eventDescription">{event.description}</div>
                         </div>
                         <div className="guestInfo">
-                            <div className="paymentInfo">
-                                <span>{toFixedLocale(user.account.balance)}</span>
-                                <Button variant="contained" className={classes.button} onClick={handleAddFounds}>Agregar fondos</Button>
-                                <span>{toFixedLocale(amount)}</span>
-                                <Button variant="contained" className={classes.button} onClick={handlePayClick}>Pagar</Button>
-                            </div>
-                            <div className="assistInfo">
-                                <span className="deadline">{event.deadline.toLocaleDateString()}</span>
-                                {guest.confirmedAssistance
-                                    ? <span>Confirmed</span>
-                                    : <Button variant="contained" className={classes.button} onClick={handleConfirmClick}>Confirmar asistencia</Button>}
-                            </div>
+                            <GuestInfo
+                                user={user}
+                                guest={guest}
+                                event={event}
+                                eventStore={eventStore}
+                                handleAddFounds={handleAddFounds}
+                                classes={classes}
+                            />
+                            <ConfirmNode
+                                guest={guest}
+                                event={event}
+                                classes={classes}
+                                eventStore={eventStore}
+                            />
                         </div>
                     </div>
                 </div>
