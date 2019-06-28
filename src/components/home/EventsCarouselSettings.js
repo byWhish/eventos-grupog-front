@@ -26,7 +26,7 @@ export const StripePrevArrow = ({ className, style, onClick }) => {
 
 export const setting = {
     infinite: true,
-    centerMode: false,
+    centerMode: true,
     speed: 500,
     slidesToShow: 7,
     slidesToScroll: 1,

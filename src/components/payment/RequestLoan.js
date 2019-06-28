@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { observer } from 'mobx-react-lite';
-import AppContext from '../utils/context';
-import { toFixedLocale } from '../utils/local';
+import {observer} from 'mobx-react-lite';
+import {toFixedLocale} from '../../utils/local';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -11,9 +10,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const RequestLoan = observer(() => {
-    const value = useContext(AppContext);
-    const { rootStore: { userStore } } = value;
+const RequestLoan = observer(({ userStore }) => {
+    console.log('hola', userStore)
     const { user } = userStore;
     const installments = 6;
     const amount = 1000;

@@ -59,7 +59,7 @@ class UsersStore {
             accountId: this.user.account.id,
             description: 'Add founds',
         };
-        BaseClient.post(this.auth, endPoint, data)
+        return BaseClient.post(this.auth, endPoint, data)
             .then((response) => {
                 this.foundsState = STATE_DONE;
                 this.fetchAccount();

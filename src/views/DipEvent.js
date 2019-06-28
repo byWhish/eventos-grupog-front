@@ -1,20 +1,18 @@
-import React, {
-    useContext, useEffect, useState,
-} from 'react';
+import React, { useContext, useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from '@material-ui/core/Button';
 import { observer } from 'mobx-react-lite';
 import AppContext from '../utils/context';
 import { STATE_PENDING } from '../config';
 import Loading from '../components/Loading';
 import './DipEvento.css';
-import GuestItem from '../components/dipEvent/GuestItem';
 import ModalLoading from '../components/ModalLoading';
-import { toFixedLocale, toLocalDateTime } from '../utils/local';
+import { toLocalDateTime } from '../utils/local';
 import history from '../utils/History';
-import MoneyCollection from '../components/Guest/MoneyCollection';
 import ConfirmNode from '../components/Guest/ConfirmNode';
-import GuestInfo from "../components/Guest/GuestInfo";
+import GuestInfo from '../components/Guest/GuestInfo';
+import GuestList from '../components/dipEvent/GuestList';
+import GuestProducts from '../components/dipEvent/GuestProducts';
+import EventProducts from '../components/dipEvent/EventProducts';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -42,53 +40,64 @@ const DipEvent = observer(({ match }) => {
 
     if (eventStore.eventState === STATE_PENDING) return <Loading />;
 
+    const addProduct = (product) => {
+        event.addGuestProduct(guest.id, product);
+    };
+
+    const removeProduct = (product) => {
+        event.removeGuestProduct(guest.id, product);
+    };
+
     return (
-        <div className="DipEvento">
-            <div className="leftPanel" />
-            <div className="rightPanel">
-                <div className="eventHeader">
-                    <div className="eventInnerWrapper">
-                        <div className="eventTitle">
-                            <span>{event.name}</span>
-                        </div>
-                        <div className="eventHeldAt">
-                            <span>{toLocalDateTime(event.heldAt)}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="eventInfo">
-                    <div className="eventInnerWrapper">
-                        <div className="ownerInfo">
-                            <div className="eventOwner">{event.ownerFullName}</div>
-                            <div className="eventDescription">{event.description}</div>
-                        </div>
-                        <div className="guestInfo">
-                            <GuestInfo
-                                user={user}
-                                guest={guest}
-                                event={event}
-                                eventStore={eventStore}
-                                handleAddFounds={handleAddFounds}
-                                classes={classes}
-                            />
-                            <ConfirmNode
-                                guest={guest}
-                                event={event}
-                                classes={classes}
-                                eventStore={eventStore}
-                            />
+        <div className="DipWrapper">
+            <div className="DipEvento">
+                <div className="leftPanel" />
+                <div className="rightPanel">
+                    <div className="eventHeader">
+                        <div className="eventInnerWrapper">
+                            <div className="eventTitle">
+                                <span>{event.name}</span>
+                            </div>
+                            <div className="eventHeldAt">
+                                <span>{toLocalDateTime(event.heldAt)}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="eventListsWrapper">
-                    <div className="eventInnerWrapper">
-                        <div className="guestList">
-                            {event.guestsList.map(guest => <GuestItem guest={guest} />)}
+                    <div className="eventInfo">
+                        <div className="eventInnerWrapper">
+                            <div className="ownerInfo">
+                                <div className="eventOwner">{event.ownerFullName}</div>
+                                <div className="eventDescription">{event.description}</div>
+                            </div>
+                            <div className="guestInfo">
+                                <GuestInfo
+                                    user={user}
+                                    guest={guest}
+                                    event={event}
+                                    eventStore={eventStore}
+                                    handleAddFounds={handleAddFounds}
+                                    classes={classes}
+                                />
+                                <ConfirmNode
+                                    guest={guest}
+                                    event={event}
+                                    classes={classes}
+                                    setOpen={setOpen}
+                                    eventStore={eventStore}
+                                />
+                            </div>
+                            <div className="eventGuests">
+                                <GuestList guests={event.guestsList} />
+                            </div>
                         </div>
                     </div>
+                    <div className="eventListsWrapper">
+                        <EventProducts eventType={event.type} items={event.products} addProduct={addProduct} />
+                        <GuestProducts eventType={event.type} items={guest.products} removeProduct={removeProduct} setOpen={setOpen} />
+                    </div>
                 </div>
+                <ModalLoading state={eventStore.confirState} open={open} setOpen={setOpen} />
             </div>
-            <ModalLoading state={eventStore.confirState} open={open} setOpen={setOpen} />
         </div>
     );
 });

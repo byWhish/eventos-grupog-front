@@ -47,12 +47,16 @@ const EventProductList = ({
         setOpen(false);
     };
 
+    const deleteItem = (product) => {
+        setItems(items.filter(item => item.id !== product.id));
+    };
+
     return (
         <div className="guestListWrapper">
             <AutoCompleteList options={templateSuggestions} onSelectItem={onSelectTemplate} placeHolder={templatePlaceHolder} />
             <AutoCompleteList options={productSuggestions} onSelectItem={setProduct} placeHolder={productsPlaceHolder} />
             <ProductDetail product={product} setProduct={setProduct} handleProductClick={handleSetProduct} />
-            <ProductsTable items={items} setItems={setItems} setProduct={setProduct} editColumn deleteColumn />
+            <ProductsTable items={items} setItems={setItems} setProduct={setProduct} deleteItem={deleteItem} editColumn deleteColumn />
             <ModalTemplate open={open} onAccept={onAccept} onCancel={onCancel} template={template} />
         </div>
     );

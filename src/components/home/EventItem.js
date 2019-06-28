@@ -15,11 +15,17 @@ const EventItem = ({ event }) => {
                     <div className="eventName">
                         {event.name}
                     </div>
+                    <div className="eventType">
+                        {event.type}
+                    </div>
                     <div className="eventOwner">
                         {event.ownerFullName}
                     </div>
                     <div className="eventHeldAt">
                         {toLocalDateTimeShort(event.heldAt)}
+                    </div>
+                    <div className="eventDescription">
+                        {event.description}
                     </div>
                 </div>
                 <div className="mask" />

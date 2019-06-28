@@ -10,8 +10,7 @@
           "newEvent": "/event",
           "dipEvent":"/dipEvent/:id",
           "confirm": "/confirm",
-          "payment": "/payment",
-          "RequestLoan": "/requestLoan"
+          "payment": "/payment"
         },
       "lang": {
         "home": {

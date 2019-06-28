@@ -1,14 +1,23 @@
 import React from 'react';
 import MoneyCollection from './MoneyCollection';
+import CommonAccount from "./CommonAccount";
 
 const GuestInfo = ({
     user, guest, event, eventStore, handleAddFounds, classes,
 }) => {
     switch (event.type) {
         case 'CommonAccountEvent':
-            return null;
+            return (
+                <CommonAccount
+                    user={user}
+                    guest={guest}
+                    event={event}
+                    eventStore={eventStore}
+                    handleAddFounds={handleAddFounds}
+                    classes={classes}
+                />
+            );
         case 'BasketEvent':
-            return null;
         case 'PartyEvent':
             return null;
         case 'MoneyCollectionEvent':

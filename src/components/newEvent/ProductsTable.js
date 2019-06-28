@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,18 +20,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsTable = ({
-    items, setItems, deleteColumn, editColumn, setProduct,
+const ProductsTable = observer(({
+    items, deleteColumn, editColumn, selectColumn, setProduct, deleteItem, selectItem,
 }) => {
     const classes = useStyles();
 
-    const handleDeleteItem = id => () => {
-        setItems(items.filter(item => item.id !== id));
+    const handleDeleteItem = product => () => {
+        deleteItem(product);
     };
 
     const handleEditItem = product => () => {
         setProduct(product);
         handleDeleteItem(product.id).apply();
+    };
+
+    const handleSelectItem = product => () => {
+        selectItem(product);
     };
 
     return (
@@ -41,11 +46,14 @@ const ProductsTable = ({
                         <TableCell align="left">Nombre</TableCell>
                         <TableCell align="right">Precio</TableCell>
                         <TableCell align="right">Rendimiento</TableCell>
-                        {deleteColumn && (
+                        {editColumn && (
                             <TableCell align="right">Editar</TableCell>
                         )}
                         {deleteColumn && (
                             <TableCell align="right">Borrar</TableCell>
+                        )}
+                        {selectColumn && (
+                            <TableCell align="right"></TableCell>
                         )}
                     </TableRow>
                 </TableHead>
@@ -62,7 +70,12 @@ const ProductsTable = ({
                             )}
                             {deleteColumn && (
                                 <TableCell align="right">
-                                    <a className="deleteLink" role="button" tabIndex={0} onClick={handleDeleteItem(row.id)}>Borrar</a>
+                                    <a className="deleteLink" role="button" tabIndex={0} onClick={handleDeleteItem(row)}>Borrar</a>
+                                </TableCell>
+                            )}
+                            {selectColumn && (
+                                <TableCell align="right">
+                                    <a className="deleteLink" role="button" tabIndex={0} onClick={handleSelectItem(row)}>{'>>>'}</a>
                                 </TableCell>
                             )}
                         </TableRow>
@@ -71,6 +84,6 @@ const ProductsTable = ({
             </Table>
         </Paper>
     );
-};
+});
 
 export default ProductsTable;

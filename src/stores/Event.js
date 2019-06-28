@@ -1,4 +1,4 @@
-import { computed } from 'mobx';
+import { computed, observable, action } from 'mobx';
 
 class Event {
     id = null;
@@ -8,7 +8,7 @@ class Event {
     description = null;
     products = [];
     owner = null;
-    guests = [];
+    @observable guests = [];
     deadline = null;
     latest = null;
     popular = null;
@@ -38,6 +38,20 @@ class Event {
 
     @computed get guestsList() {
         return this.guests.map(guest => guest);
+    }
+
+    getGuest(id) {
+        return this.guests.find(guest => guest.id === id);
+    }
+
+    @action addGuestProduct(id, product) {
+        const guest = this.getGuest(id);
+        if (!guest.products.find(p => p.id === product.id)) guest.products.push(product);
+    }
+
+    @action removeGuestProduct(id, product) {
+        const guest = this.getGuest(id);
+        guest.products = guest.products.filter(p => p.id !== product.id);
     }
 }
 

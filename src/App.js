@@ -23,7 +23,7 @@ import ProductsStore from './stores/ProductsStore';
 import DipEvent from './views/DipEvent';
 import Assist from './views/Assists';
 import Payment from './views/Payment';
-import RequestLoan from './views/RequestLoan';
+import RequestLoan from './components/payment/RequestLoan';
 
 const context = {
     rootStore: {},
@@ -59,7 +59,6 @@ class App extends Component {
                     <PrivateRoute exact path={urls.home} component={Home} />
                     <PrivateRoute exact path={urls.dipEvent} component={DipEvent} />
                     <PrivateRoute exact path={urls.payment} component={Payment} />
-                    <PrivateRoute exact path={urls.requestLoan} component={RequestLoan} />
                     <Route component={Error404} />
                 </Switch>
             </AppContext.Provider>

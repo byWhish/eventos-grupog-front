@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { observer } from 'mobx-react-lite';
 import AppContext from '../utils/context';
 import { toFixedLocale } from '../utils/local';
-import history from '../utils/History';
+import PaymentForm from '../components/payment/PaymentForm';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -26,18 +26,21 @@ const Payment = observer(() => {
     const { rootStore: { userStore } } = value;
     const { user } = userStore;
     const [amount, setAmount] = useState(0);
+    const [operation, setOPeration] = useState(null);
     const [financialEntity, setFinancialEntity] = useState(null);
+    const [cardInfo, setCardInfo] = useState({
+        number: '',
+        name: '',
+        expiry: '',
+        cvc: '',
+    });
 
     const handleTypeChoose = type => () => {
-
+        setFinancialEntity(type);
     };
 
     const handleAddFoundsClick = () => {
         userStore.postFounds(financialEntity, amount);
-    };
-
-    const handleAddFounds = () => {
-        history.push('/requestLoan');
     };
 
     const handleInputChange = (event) => {
@@ -45,42 +48,46 @@ const Payment = observer(() => {
     };
 
     const classes = useStyles();
+
     return (
-        <div className="paymentWrapper">
-            <div className="accountBalance">
-                <span>{toFixedLocale(user.account.balance)}</span>
-            </div>
-            <div className="paymentTypes">
-                <div className="creditCard" role="button" tabIndex={0} onClick={handleTypeChoose('card')}>
-                    <Cards
-                        number=""
-                        name=""
-                        expiry=""
-                        cvc=""
-                        focused=""
-                    />
+        <div className="paymentRoot">
+            <div className="paymentWrapper">
+                <div className="accountBalance">
+                    <span>{toFixedLocale(user.account.balance)}</span>
                 </div>
-                <div className="easyPay" role="button" tabIndex={0} onClick={handleTypeChoose('other')}>
-                    <img alt="" src="/img/pagofacil.png" />
+                <div className="paymentTypes">
+                    <div className="creditCard payment" role="button" tabIndex={0} onClick={handleTypeChoose('card')}>
+                        <Cards
+                            number={cardInfo.number}
+                            name={cardInfo.name}
+                            expiry={cardInfo.expiry}
+                            cvc={cardInfo.cvc}
+                            focused={cardInfo.focused}
+                        />
+                    </div>
+                    <div className="easyPay payment" role="button" tabIndex={0} onClick={handleTypeChoose('other')}>
+                        <img alt="" src="/img/pagofacil.png" />
+                    </div>
+                    <div className="loam payment">
+                        <img alt="" src="/img/loan.jpg" />
+                        <Button variant="contained" className={classes.button} onClick={handleTypeChoose('loan')}>Solicitar prestamo</Button>
+                    </div>
                 </div>
-                <div className="loam" role="button" tabIndex={0} onClick={handleTypeChoose('loan')}>
-                    <img alt="" src="/img/loan.jpg" />
+                <PaymentForm classes={classes} type={financialEntity} userStore={userStore} cardInfo={cardInfo} setCardInfo={setCardInfo} operation={operation} setOperation={setOPeration} />
+                <div className="amount">
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="standard-name"
+                            label="Monto"
+                            className={classes.textField}
+                            value={amount}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                    </FormControl>
                 </div>
+                <Button variant="contained" className={classes.button} onClick={handleAddFoundsClick}>Agregar fondos</Button>
             </div>
-            <div className="amount">
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="standard-name"
-                        label="Monto"
-                        className={classes.textField}
-                        value={amount}
-                        onChange={handleInputChange}
-                        margin="normal"
-                    />
-                </FormControl>
-            </div>
-            <Button variant="contained" className={classes.button} onClick={handleAddFoundsClick}>Agregar fondos</Button>
-            <Button variant="contained" className={classes.button} onClick={handleAddFounds}>Solicitar prestamo</Button>
         </div>
     );
 });
