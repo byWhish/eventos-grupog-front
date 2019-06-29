@@ -4,6 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import {observer} from 'mobx-react-lite';
 import {toFixedLocale} from '../../utils/local';
 import AppContext from '../../utils/context';
+import './RequestLoan.css';
 
 const useStyles = makeStyles(theme => ({
     button: {

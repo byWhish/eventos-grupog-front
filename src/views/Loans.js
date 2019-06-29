@@ -68,6 +68,7 @@ const Loans = observer(() => {
 
     const handlePayEvent = (loan) => {
         loanStore.payLoan(loan, user);
+        userStore.fetchAccount();
     };
 
     function PaymentButton(props) {
