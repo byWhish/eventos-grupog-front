@@ -6,23 +6,22 @@ import { STATE_DONE, STATE_ERROR, STATE_PENDING } from '../config';
 class LoanStore {
     @observable loans = [];
     @observable state = STATE_PENDING;
-    @observable userId = null;
 
     constructor(Auth) {
         this.auth = Auth;
     }
 
-    initFetch() {
-        this.fetchLoans();
+    initFetch(user) {
+        this.fetchLoans(user);
     }
 
-    payLoan(loan) {
+    payLoan(loan, user) {
         const endpoint = `/api/private/loans/pay/${loan.id}`;
 
         BaseClient.post(this.auth, endpoint)
             .then((response) => {
                 Logger.of('payLoan').trace('response', response);
-                this.fetchLoans();
+                this.fetchLoans(user);
                 this.state = STATE_DONE;
             })
             .catch((error) => {
@@ -31,8 +30,8 @@ class LoanStore {
             });
     }
 
-    fetchLoans() {
-        const endpoint = `/api/private/loans/all/${2}`;
+    fetchLoans(user) {
+        const endpoint = `/api/private/loans/all/${user.id}`;
 
         BaseClient.get(this.auth, endpoint)
             .then((response) => {

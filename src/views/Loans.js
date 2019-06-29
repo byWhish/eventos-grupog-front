@@ -13,6 +13,7 @@ import history from '../utils/History';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import RequestLoan from '../components/payment/RequestLoan';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,8 +44,9 @@ const useStyles = makeStyles(theme => ({
 const Loans = observer(() => {
     const classes = useStyles();
     const value = useContext(AppContext);
-    const { rootStore: { loanStore } } = value;
+    const { rootStore: { loanStore, userStore } } = value;
     const { loans } = loanStore;
+    const { user } = userStore;
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -59,13 +61,13 @@ const Loans = observer(() => {
     }
 
     const fetchLoans = () => {
-        loanStore.initFetch();
+        loanStore.initFetch(user);
     };
 
     useEffect(fetchLoans, []);
 
     const handlePayEvent = (loan) => {
-        loanStore.payLoan(loan);
+        loanStore.payLoan(loan, user);
     };
 
     function PaymentButton(props) {
@@ -87,6 +89,7 @@ const Loans = observer(() => {
         <div>
             <img style={{ width: '50px', height: '50px', marginLeft: '15px', marginTop: '15px', cursor: 'pointer' }}
                 alt="" src="/img/back-white.png" onClick={handleBackClick} />
+            <RequestLoan userStore={userStore} />
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
