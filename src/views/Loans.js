@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import AppContext from '../utils/context';
 import { toFixedLocale, toLocalDateTime } from '../utils/local';
+import history from '../utils/History';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,38 +48,45 @@ const Loans = observer(() => {
                 </TableCell>
             );
         }
+    }
+
+    const handleBackClick = () => {
+        history.goBack();
     };
 
     return (
-
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Fecha</TableCell>
-                        <TableCell align="right">Valor</TableCell>
-                        <TableCell align="right">Cuotas Totales</TableCell>
-                        <TableCell align="right">Cuotas Restantes</TableCell>
-                        <TableCell align="right">Cuotas a Pagar</TableCell>
-                        <TableCell align="right">Deuda</TableCell>
-                        <TableCell align="right">Pagar</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {loans.map(loan => (
-                        <TableRow key={loan.id}>
-                            <TableCell component="th" scope="row">{toLocalDateTime(new Date(loan.createdAt))}</TableCell>
-                            <TableCell align="right">{toFixedLocale(loan.amount)}</TableCell>
-                            <TableCell align="right">{loan.installments.length}</TableCell>
-                            <TableCell align="right">{loan.amountOfRemainingInstallments}</TableCell>
-                            <TableCell align="right">{loan.amountOfInstallmentsToPay}</TableCell>
-                            <TableCell align="right">{toFixedLocale(loan.debt)}</TableCell>
-                            <PaymentButton loan={loan} />
+        <div>
+            <img style={{ width: '50px', height: '50px', marginLeft: '15px', marginTop: '15px', cursor: 'pointer' }}
+                alt="" src="/img/back-white.png" onClick={handleBackClick} />
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Fecha</TableCell>
+                            <TableCell align="right">Valor</TableCell>
+                            <TableCell align="right">Cuotas Totales</TableCell>
+                            <TableCell align="right">Cuotas Restantes</TableCell>
+                            <TableCell align="right">Cuotas a Pagar</TableCell>
+                            <TableCell align="right">Deuda</TableCell>
+                            <TableCell align="right">Pagar</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </Paper>
+                    </TableHead>
+                    <TableBody>
+                        {loans.map(loan => (
+                            <TableRow key={loan.id}>
+                                <TableCell component="th" scope="row">{toLocalDateTime(new Date(loan.createdAt))}</TableCell>
+                                <TableCell align="right">{toFixedLocale(loan.amount)}</TableCell>
+                                <TableCell align="right">{loan.installments.length}</TableCell>
+                                <TableCell align="right">{loan.amountOfRemainingInstallments}</TableCell>
+                                <TableCell align="right">{loan.amountOfInstallmentsToPay}</TableCell>
+                                <TableCell align="right">{toFixedLocale(loan.debt)}</TableCell>
+                                <PaymentButton loan={loan} />
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
+        </div>
     );
 });
 
