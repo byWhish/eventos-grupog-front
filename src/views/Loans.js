@@ -10,6 +10,9 @@ import TableBody from '@material-ui/core/TableBody';
 import AppContext from '../utils/context';
 import { toFixedLocale, toLocalDateTime } from '../utils/local';
 import history from '../utils/History';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
+import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,6 +24,20 @@ const useStyles = makeStyles(theme => ({
     table: {
         minWidth: 650,
     },
+    tablePagination: {
+    },
+    tablePaginationCaption: {
+        color: 'white',
+    },
+    tablePaginationSelectIcon: {
+        color: 'white',
+    },
+    tablePaginationSelect: {
+        color: 'black',
+    },
+    tablePaginationActions: {
+        color: 'white',
+    },
 }));
 
 const Loans = observer(() => {
@@ -28,6 +45,18 @@ const Loans = observer(() => {
     const value = useContext(AppContext);
     const { rootStore: { loanStore } } = value;
     const { loans } = loanStore;
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, loans.length - page * rowsPerPage);
+
+    function handleChangePage(event, newPage) {
+        setPage(newPage);
+    }
+
+    function handleChangeRowsPerPage(event) {
+        setRowsPerPage(parseInt(event.target.value, 10));
+    }
 
     const fetchLoans = () => {
         loanStore.initFetch();
@@ -72,7 +101,7 @@ const Loans = observer(() => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {loans.map(loan => (
+                        {loans.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(loan => (
                             <TableRow key={loan.id}>
                                 <TableCell component="th" scope="row">{toLocalDateTime(new Date(loan.createdAt))}</TableCell>
                                 <TableCell align="right">{toFixedLocale(loan.amount)}</TableCell>
@@ -83,7 +112,36 @@ const Loans = observer(() => {
                                 <PaymentButton loan={loan} />
                             </TableRow>
                         ))}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 48 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                colSpan={3}
+                                count={loans.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: { 'aria-label': 'Rows per page' },
+                                    native: true,
+                                }}
+                                onChangePage={handleChangePage}
+                                onChangeRowsPerPage={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                                classes={{
+                                    caption: classes.tablePaginationCaption,
+                                    selectIcon: classes.tablePaginationSelectIcon,
+                                    select: classes.tablePaginationSelect,
+                                    actions: classes.tablePaginationActions,
+                                }}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </Paper>
         </div>
