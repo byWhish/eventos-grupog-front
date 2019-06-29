@@ -44,7 +44,7 @@ class BaseClient {
         });
 
 
-    static getConfig = lang => axios.get(`/config/${lang}-AR.json`)
+    static getConfig = lang => axios.get(`/config/${lang}.json`)
         .then(response => response.data)
         .catch((error) => {
             Logger.of('getConfig').error('error:', error);

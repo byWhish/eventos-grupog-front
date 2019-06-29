@@ -31,3 +31,7 @@ export const toLocalDateTimeShort = (date, lang, country) => {
     };
     return date.toLocaleDateString('es-AR', options);
 };
+
+export const translateBoolean = (bool) => {
+    return bool ? 'Si' : 'No';
+};
