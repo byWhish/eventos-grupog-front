@@ -4,8 +4,6 @@ import EventsCarousel from '../components/home/EventsCarousel';
 import './Home.css';
 import NavBar from '../components/Navbar';
 import AppContext from '../utils/context';
-import { STATE_PENDING } from '../config';
-import Loading from '../components/Loading';
 
 const Home = observer(() => {
     const value = useContext(AppContext);
@@ -21,8 +19,6 @@ const Home = observer(() => {
     };
 
     useEffect(fetchUserInfo, []);
-
-    if (userStore.state === STATE_PENDING) return <Loading />;
 
     return (
         <div className="home">
