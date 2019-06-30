@@ -21,8 +21,7 @@ const RequestLoan = observer(({ userStore }) => {
     const amount = 1000;
 
     const handleRequestLoan = () => {
-        userStore.postRequestLoan();
-        loanStore.fetchLoans(user);
+        userStore.postRequestLoan(loanStore);
     };
 
     const classes = useStyles();
