@@ -9,7 +9,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.0",
-    "auth0-js": "^9.10.2",
+    "auth0-js": "^9.11.1",
     "axios": "^0.18.0",
     "clsx": "^1.0.4",
     "detect-browser-language": "0.0.2",
