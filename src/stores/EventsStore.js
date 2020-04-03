@@ -25,6 +25,7 @@ class EventsStore {
                 this.fetchLatestEvents(response.id);
                 this.fetchOngoingEvents(response.id);
                 this.userId = response.id;
+                this.auth.userId = this.userId;
                 this.state = STATE_DONE;
             })
             .catch((error) => {

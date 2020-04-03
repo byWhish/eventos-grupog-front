@@ -84,3 +84,30 @@
 .carouselWrapper .slick-slider .slick-arrow.slick-next .arrowImg{
     margin-left: auto;
 }
+
+
+@keyframes content-placeholder-animation {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(300%);
+    }
+}
+
+.content-placeholder-background {
+    animation: content-placeholder-animation 2s linear infinite;
+
+    background: -moz-linear-gradient(left, rgba(40,40,40,0) 0%, rgba(40,40,40,1) 50%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(left, rgba(40,40,40,0) 0%,rgba(40,40,40,1) 50%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right, rgba(40,40,40,0) 0%,rgba(40,40,40,1) 50%,rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00282828', endColorstr='#00000000',GradientType=1 );
+
+    display: block;
+    height: inherit;
+    left: 0;
+    /*position: absolute;*/
+    top: 0;
+    width: 70%;
+    will-change: transform;
+}

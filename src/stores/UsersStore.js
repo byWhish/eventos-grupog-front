@@ -80,13 +80,14 @@ class UsersStore {
             });
     }
 
-    postRequestLoan() {
+    postRequestLoan(loanStore) {
         this.foundsState = STATE_PENDING;
         const endPoint = `/api/private/loans/${this.user.id}`;
         BaseClient.post(this.auth, endPoint, {})
             .then((response) => {
                 this.foundsState = STATE_DONE;
                 this.fetchAccount();
+                loanStore.fetchLoans(this.user);
                 return response;
             })
             .catch((error) => {

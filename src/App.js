@@ -20,10 +20,11 @@ import AppContext from './utils/context';
 import NewEvent from './views/NewEvent';
 import UsersStore from './stores/UsersStore';
 import ProductsStore from './stores/ProductsStore';
+import LoanStore from './stores/LoanStore';
 import DipEvent from './views/DipEvent';
 import Assist from './views/Assists';
 import Payment from './views/Payment';
-import RequestLoan from './components/payment/RequestLoan';
+import Loans from './views/Loans';
 
 const context = {
     rootStore: {},
@@ -40,6 +41,7 @@ class App extends Component {
             eventStore: new EventsStore(this.Auth),
             userStore: new UsersStore(this.Auth),
             productStore: new ProductsStore(this.Auth),
+            loanStore: new LoanStore(this.Auth),
         };
         context.rootStore.configStore.fetchConfig();
     }
@@ -59,6 +61,7 @@ class App extends Component {
                     <PrivateRoute exact path={urls.home} component={Home} />
                     <PrivateRoute exact path={urls.dipEvent} component={DipEvent} />
                     <PrivateRoute exact path={urls.payment} component={Payment} />
+                    <PrivateRoute exact path={urls.loans} component={Loans} />
                     <Route component={Error404} />
                 </Switch>
             </AppContext.Provider>
