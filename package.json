@@ -2,6 +2,10 @@
   "name": "eventos-grupog-front",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byWhish/eventos-grupog-front.git"
+  },
   "engines": {
     "node": "11.14.0",
     "npm": "6.9.0"
